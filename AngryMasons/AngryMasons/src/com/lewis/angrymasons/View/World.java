@@ -18,4 +18,12 @@ public class World {
 	public Ship getShip(){
 		return ship;
 	}
+	
+	public void update(){
+		ship.update();
+	}
+	
+	public void dispose(){
+		
+	}
 }

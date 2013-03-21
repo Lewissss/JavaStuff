@@ -14,8 +14,6 @@ public abstract class MoveableEntity extends Entity {
 		this.rotation = rotation;
 	}
 	
-	abstract void advance(float delta);
-	
 	public Vector2 getVelocity()
 	{
 		return velocity;
@@ -34,4 +32,7 @@ public abstract class MoveableEntity extends Entity {
 	public void setRotation(float rotation){
 		this.rotation = rotation;
 	}
+	
+	public abstract void update();
+	
 }

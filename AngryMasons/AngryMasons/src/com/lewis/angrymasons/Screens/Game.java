@@ -3,20 +3,24 @@ package com.lewis.angrymasons.Screens;
 import com.badlogic.gdx.Screen;
 import com.lewis.angrymasons.AngryMasons;
 import com.lewis.angrymasons.View.World;
+import com.lewis.angrymasons.View.WorldRenderer;
 
 public class Game implements Screen{
 	
 	AngryMasons game;
 	World world;
+	WorldRenderer render;
 	
 	public Game(AngryMasons game){
 		this.game = game;
+		world = new World(game);
+		render = new WorldRenderer(world);
 	}
 
 	@Override
 	public void render(float delta) {
-		// TODO Auto-generated method stub
-		
+		world.update();
+		render.render();
 	}
 
 	@Override
@@ -33,8 +37,7 @@ public class Game implements Screen{
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
-		
+		dispose();
 	}
 
 	@Override
@@ -51,8 +54,7 @@ public class Game implements Screen{
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
+		world.dispose();
 	}
 
 }

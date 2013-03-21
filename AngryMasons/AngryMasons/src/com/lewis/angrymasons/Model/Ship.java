@@ -9,7 +9,7 @@ public class Ship extends MoveableEntity{
 	}
 
 	@Override
-	void advance(float delta) {
+	public void update() {
 		// TODO Auto-generated method stub
 		
 	}
