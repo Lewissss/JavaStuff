@@ -1,6 +1,8 @@
 package com.lewis.angrymasons.Screens;
 
+import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 
@@ -51,6 +53,8 @@ public class SplashScreen implements Screen {
 		
 		splashSprite = new Sprite(splashTexture);
 		splashSprite.setColor(1, 1, 1, 0);
+		splashSprite.setX(Gdx.graphics.getWidth() / 2 - (splashSprite.getWidth() / 2));
+		splashSprite.setY(Gdx.graphics.getHeight() / 2 - (splashSprite.getHeight() / 2));
 		
 		batch = new SpriteBatch();
 		
@@ -58,8 +62,23 @@ public class SplashScreen implements Screen {
 		
 		manager = new TweenManager();
 		
+		// Is fade in done		CALLBACK TRIGGERS
+		TweenCallback cb = new TweenCallback(){
+
+			@Override		// If the tween is finished, then do tweenCompleted.
+			public void onEvent(int type, BaseTween<?> source) {
+				tweenCompleted();
+			}
+		};
+		
 		// Animate
-		Tween.to(splashSprite, SpriteTween.ALPHA, 2.5f).target(1).ease(TweenEquations.easeInQuad).start(manager);
+		Tween.to(splashSprite, SpriteTween.ALPHA, 2.5f).target(1).ease(TweenEquations.easeInQuad).repeatYoyo(1,  2f).setCallback(cb).setCallbackTriggers(TweenCallback.COMPLETE).start(manager);
+	}
+	
+	private void tweenCompleted()
+	{
+		Gdx.app.log(AngryMasons.LOG, "Tween completed");
+		game.setScreen(new MainMenu(game));
 	}
 
 	@Override
