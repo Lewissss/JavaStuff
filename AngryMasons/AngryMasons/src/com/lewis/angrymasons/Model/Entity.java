@@ -9,6 +9,14 @@ public abstract class Entity {
 	protected float height;
 	protected Rectangle bounds;
 	
+	public Entity(Vector2 position, float width, float height){
+		this.position = position;
+		this.width = width;
+		this.height = height;
+		
+		bounds = new Rectangle(position.x, position.y, width, height);
+	}
+	
 	/**
 	 * @return the position
 	 */

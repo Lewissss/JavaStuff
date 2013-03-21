@@ -2,6 +2,7 @@ package com.lewis.angrymasons.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,9 +10,12 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.lewis.angrymasons.AngryMasons;
 
 public class MainMenu implements Screen{
@@ -25,6 +29,7 @@ public class MainMenu implements Screen{
 	Skin skin;
 	SpriteBatch batch;
 	TextButton button;
+	Label label;
 	
 	public MainMenu(AngryMasons game)
 	{
@@ -40,8 +45,8 @@ public class MainMenu implements Screen{
 		
 		batch.begin();
 		
+		// Draw everything in stage
 		stage.draw();
-		white.draw(batch,  "Angry Masons",  Gdx.graphics.getWidth() / 2 - 15, Gdx.graphics.getHeight() / 2 + 100);
 		
 		batch.end();
 	}
@@ -83,7 +88,16 @@ public class MainMenu implements Screen{
 			}
 		});
 		
+		//Label stuff (Text above button)
+		LabelStyle ls = new LabelStyle(white, Color.WHITE);
+		label = new Label("Angry Masons", ls);
+		label.setX(0);
+		label.setY(Gdx.graphics.getHeight() / 2 + 100);
+		label.setWidth(width);	// Stretches label across entire screen
+		label.setAlignment(Align.center);	//Centres stretched label
+		
 		stage.addActor(button);
+		stage.addActor(label);
 		
 	}
 

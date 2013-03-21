@@ -1,6 +1,37 @@
 package com.lewis.angrymasons.Model;
 
+import com.badlogic.gdx.math.Vector2;
+
 public abstract class MoveableEntity extends Entity {
 
-	protected Vector2 
+	protected Vector2 velocity;
+	protected float SPEED;
+	protected float rotation;
+	
+	public MoveableEntity(float SPEED, float rotation, float width, float height, Vector2 position){
+		super(position, width, height);	// Gives it to the base constructor
+		this.SPEED = SPEED;
+		this.rotation = rotation;
+	}
+	
+	abstract void advance(float delta);
+	
+	public Vector2 getVelocity()
+	{
+		return velocity;
+	}
+	
+	public void setVelocity(Vector2 velocity)
+	{
+		this.velocity = velocity;
+	}
+	
+	public float getRotation()
+	{
+		return rotation;
+	}
+	
+	public void setRotation(float rotation){
+		this.rotation = rotation;
+	}
 }

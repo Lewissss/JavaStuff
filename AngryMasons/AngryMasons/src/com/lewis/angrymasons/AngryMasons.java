@@ -5,7 +5,7 @@ import com.lewis.angrymasons.Screens.SplashScreen;
 
 public class AngryMasons extends Game {
 	
-	public static final String VERSION = "0.0.0.01 Pre-Alpha";
+	public static final String VERSION = "0.0.0.02 Pre-Alpha";
 	public static final String LOG = "Angry Masons";
 	
 	

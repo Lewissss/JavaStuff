@@ -2,10 +2,12 @@ package com.lewis.angrymasons.Screens;
 
 import com.badlogic.gdx.Screen;
 import com.lewis.angrymasons.AngryMasons;
+import com.lewis.angrymasons.View.World;
 
 public class Game implements Screen{
 	
 	AngryMasons game;
+	World world;
 	
 	public Game(AngryMasons game){
 		this.game = game;
