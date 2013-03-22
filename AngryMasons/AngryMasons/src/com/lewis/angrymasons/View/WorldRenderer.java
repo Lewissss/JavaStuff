@@ -45,7 +45,7 @@ public class WorldRenderer {
 		batch.setProjectionMatrix(cam.combined);
 		
 		batch.begin();
-		batch.draw(shipTexture, ship.getPosition().x, ship.getPosition().y, 0,  0,  ship.getWidth(), ship.getHeight(), 1, 1, ship.getRotation(), 
+		batch.draw(shipTexture, ship.getPosition().x, ship.getPosition().y, ship.getWidth() / 2,  ship.getHeight() / 2,  ship.getWidth(), ship.getHeight(), 1, 1, ship.getRotation(), 
 				0, 0, shipTexture.getWidth(), shipTexture.getHeight(), false, false);
 		
 		batch.end();
