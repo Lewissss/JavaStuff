@@ -1,16 +1,18 @@
 package com.lewis.angrymasons;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.lewis.angrymasons.Screens.GameScreen;
 
 public class AngryMasons extends Game {
 	
 	public static final String VERSION = "0.0.0.04(Pre-Alpha)";
 	public static final String LOG = "Angry Masons";
-	
+	FPSLogger log;
 	
 	@Override
-	public void create() {		
+	public void create() {	
+		log = new FPSLogger();
 		setScreen(new GameScreen(this));
 	}
 
@@ -22,6 +24,7 @@ public class AngryMasons extends Game {
 	@Override
 	public void render() {		
 		super.render();
+		log.log();
 	}
 
 	@Override

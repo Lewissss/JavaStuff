@@ -9,13 +9,16 @@ public class Ship extends MoveableEntity{
 		super(SPEED, rotation, width, height, position);
 	}
 
-	@Override
 	public void update() {
 		position.add(velocity.tmp().mul(Gdx.graphics.getDeltaTime() * SPEED));		// Add the velocity to the position, then use .mul to times by delta time and SPEED	
 		
 		if(velocity.x != 0 || velocity.y != 0)
 		{
-		rotation = velocity.angle() - 90;	// Make ship rotate towards direction of travel (SO MUCH EASIER!!)
+			rotation = velocity.angle() - 90;	// Make ship rotate towards direction of travel (SO MUCH EASIER!!)
 		}
+		
+		// Set bounds
+		bounds.x = position.x;
+		bounds.y = position.y;
 	}
 }
