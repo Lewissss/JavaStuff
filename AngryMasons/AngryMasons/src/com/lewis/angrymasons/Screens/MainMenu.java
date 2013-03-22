@@ -29,7 +29,9 @@ public class MainMenu implements Screen{
 	Skin skin;
 	SpriteBatch batch;
 	TextButton button;
+	TextButton exitButton;
 	Label label;
+	Label versionLabel;
 	
 	public MainMenu(AngryMasons game)
 	{
@@ -51,6 +53,7 @@ public class MainMenu implements Screen{
 		batch.end();
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void resize(int width, int height) {
 		if(stage == null)
@@ -83,8 +86,30 @@ public class MainMenu implements Screen{
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button)
 			{
 				System.out.println("Up");
-				game.setScreen(new Game(game));
+				game.setScreen(new GameScreen(game));
 
+			}
+		});
+		
+		exitButton = new TextButton("EXIT", style);
+		exitButton.setWidth(400);
+		exitButton.setHeight(100);
+		exitButton.setX(Gdx.graphics.getWidth() / 2 - button.getWidth() / 2);
+		exitButton.setY(Gdx.graphics.getHeight() / 4);	// A quarter from the bottom of the screen
+		
+		exitButton.addListener(new InputListener(){
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
+			{
+				return true;
+			}
+			
+			// Must handle both touch up and touch down otherwise it doesn't work
+			
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button)
+			{
+				System.out.println("Exit");
+				game.dispose();
+				System.exit(0);
 			}
 		});
 		
@@ -96,8 +121,17 @@ public class MainMenu implements Screen{
 		label.setWidth(width);	// Stretches label across entire screen
 		label.setAlignment(Align.center);	//Centres stretched label
 		
+		// Draw the version to the top of the screen
+		versionLabel = new Label("Version " + game.VERSION, ls);
+		versionLabel.setX(2);
+		versionLabel.setY(Gdx.graphics.getHeight() - 30);
+		
+		
+		
 		stage.addActor(button);
+		stage.addActor(exitButton);
 		stage.addActor(label);
+		stage.addActor(versionLabel);
 		
 	}
 

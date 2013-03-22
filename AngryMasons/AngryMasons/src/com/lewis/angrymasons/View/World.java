@@ -12,7 +12,8 @@ public class World {
 	
 	public World(AngryMasons game){
 		this.game = game;
-		ship = new Ship(new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2), 1, 1, 0, 5f);
+		ship = new Ship(new Vector2(5, 5), 1, 1, 0, 5f);
+		Gdx.input.setInputProcessor(new InputHandler(this));
 	}
 	
 	public Ship getShip(){

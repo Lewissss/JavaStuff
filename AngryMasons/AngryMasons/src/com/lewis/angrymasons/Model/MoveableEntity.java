@@ -12,6 +12,7 @@ public abstract class MoveableEntity extends Entity {
 		super(position, width, height);	// Gives it to the base constructor
 		this.SPEED = SPEED;
 		this.rotation = rotation;
+		velocity = new Vector2(0, 0);
 	}
 	
 	public Vector2 getVelocity()

@@ -5,13 +5,13 @@ import com.lewis.angrymasons.AngryMasons;
 import com.lewis.angrymasons.View.World;
 import com.lewis.angrymasons.View.WorldRenderer;
 
-public class Game implements Screen{
+public class GameScreen implements Screen{
 	
 	AngryMasons game;
 	World world;
 	WorldRenderer render;
 	
-	public Game(AngryMasons game){
+	public GameScreen(AngryMasons game){
 		this.game = game;
 		world = new World(game);
 		render = new WorldRenderer(world);

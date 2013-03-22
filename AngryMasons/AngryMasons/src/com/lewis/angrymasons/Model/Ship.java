@@ -1,5 +1,6 @@
 package com.lewis.angrymasons.Model;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 public class Ship extends MoveableEntity{
@@ -10,7 +11,11 @@ public class Ship extends MoveableEntity{
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		position.add(velocity.tmp().mul(Gdx.graphics.getDeltaTime() * SPEED));		// Add the velocity to the position, then use .mul to times by delta time and SPEED	
 		
+		if(velocity.x != 0 || velocity.y != 0)
+		{
+		rotation = velocity.angle() - 90;	// Make ship rotate towards direction of travel (SO MUCH EASIER!!)
+		}
 	}
 }
