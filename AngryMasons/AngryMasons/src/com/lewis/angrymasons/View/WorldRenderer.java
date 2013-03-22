@@ -69,12 +69,17 @@ public class WorldRenderer {
 		// For debug, render a shape around the ship
 		sr.setProjectionMatrix(cam.combined);
 		sr.begin(ShapeType.Rectangle);
-		sr.rect(ship.getPosition().x, ship.getPosition().y, ship.getWidth(), ship.getHeight());
+		sr.setColor(Color.CYAN);
+		sr.rect(ship.getBounds().x, ship.getBounds().y, ship.getBounds().width, ship.getBounds().height);
+		sr.setColor(Color.RED);
+		sr.rect(follow.getBounds().x, follow.getBounds().y, follow.getBounds().width, follow.getBounds().width);
 		sr.end();
 	}
 	
 	public void dispose(){
 		batch.dispose();
 		shipTexture.dispose();
+		followerTexture.dispose();
+		sr.dispose();
 	}
 }

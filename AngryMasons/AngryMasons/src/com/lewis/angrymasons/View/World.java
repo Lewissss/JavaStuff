@@ -30,6 +30,10 @@ public class World {
 	public void update(){
 		ship.update();
 		follower.update(ship);
+		
+		if(ship.getBounds().overlaps(follower.getBounds())){
+			Gdx.app.log(AngryMasons.LOG, "Ship hitt!!");
+		}
 	}
 	
 	public void dispose(){
