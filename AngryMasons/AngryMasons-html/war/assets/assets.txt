@@ -2,6 +2,7 @@ d:
 d:data
 t:data/button.pack
 i:data/button.png
+i:data/follower.png
 t:data/font.fnt
 b:data/font_0.tga
 i:data/ship.png

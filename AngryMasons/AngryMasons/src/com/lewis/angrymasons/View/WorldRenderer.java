@@ -1,5 +1,7 @@
 package com.lewis.angrymasons.View;
 
+import java.util.Iterator;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
@@ -9,6 +11,8 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.utils.Array;
+import com.lewis.angrymasons.Model.Bullet;
 import com.lewis.angrymasons.Model.Follower;
 import com.lewis.angrymasons.Model.Ship;
 
@@ -18,13 +22,18 @@ public class WorldRenderer {
 	SpriteBatch batch;
 	Ship ship;
 	OrthographicCamera cam;
-	Texture shipTexture, followerTexture;
+	Texture shipTexture, followerTexture, bulletTexture;
 	float width, height;
 	ShapeRenderer sr;
 	Follower follow;
+	Array<Bullet> bullets;
+	Iterator<Bullet> bIter;
+	Bullet b;
 	
 	public WorldRenderer(World world){
 		this.world = world;
+		
+		world.setRenderer(this);
 		
 		width = Gdx.graphics.getWidth() / 40;
 		height = Gdx.graphics.getHeight() / 40;
@@ -42,8 +51,10 @@ public class WorldRenderer {
 		followerTexture = new Texture("data/follower.png");
 		followerTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
+		bulletTexture = new Texture("data/bullet.png");
+		bulletTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
 		sr = new ShapeRenderer();
-		sr.setColor(Color.CYAN);
 	}
 	
 	public void render(){
@@ -52,6 +63,7 @@ public class WorldRenderer {
 		
 		ship = world.getShip();	// Get ship position
 		follow = world.getFollower();
+		bullets = world.getBullets();
 		
 		cam.position.set(ship.getPosition().x, ship.getPosition().y, 0);
 		cam.update();
@@ -64,6 +76,13 @@ public class WorldRenderer {
 		batch.draw(followerTexture, follow.getPosition().x, follow.getPosition().y, follow.getWidth() / 2, follow.getHeight() / 2, follow.getWidth(), follow.getHeight(), 1, 1, follow.getRotation(),
 				0, 0, followerTexture.getWidth(), followerTexture.getHeight(), false, false);
 		
+		bIter = bullets.iterator();
+		while(bIter.hasNext()){
+			b = bIter.next();
+			batch.draw(bulletTexture, b.getPosition().x, b.getPosition().y, b.getWidth() / 2, b.getHeight() / 2, b.getWidth(), b.getHeight(), 1, 1, b.getRotation(),
+					0, 0, bulletTexture.getWidth(), bulletTexture.getHeight(), false, false);
+		}
+		
 		batch.end();
 		
 		// For debug, render a shape around the ship
@@ -74,6 +93,10 @@ public class WorldRenderer {
 		sr.setColor(Color.RED);
 		sr.rect(follow.getBounds().x, follow.getBounds().y, follow.getBounds().width, follow.getBounds().width);
 		sr.end();
+	}
+	
+	public OrthographicCamera getCamera(){
+		return cam;
 	}
 	
 	public void dispose(){

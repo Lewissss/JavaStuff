@@ -2,12 +2,17 @@ package com.lewis.angrymasons.View;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.lewis.angrymasons.Model.Bullet;
 import com.lewis.angrymasons.Model.Ship;
 
 public class InputHandler implements InputProcessor{
 
 	World world;
 	Ship ship;
+	Vector3 touch = new Vector3();
+	Vector2 vec2Touch = new Vector2();
 	
 	public InputHandler(World world)
 	{
@@ -78,7 +83,14 @@ public class InputHandler implements InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		return false;
+		touch.set(screenX, screenY, 0);
+		world.getRenderer().getCamera().unproject(touch);
+		vec2Touch.set(touch.x, touch.y);
+		
+		ship = world.getShip();
+		
+		world.addBullet(new Bullet(Bullet.SPEED,  0,  .1f,  8/20f,  new Vector2(ship.getPosition().x, ship.getPosition().y), new Vector2(vec2Touch.sub(ship.getPosition()))));
+		return true;
 	}
 
 	@Override
