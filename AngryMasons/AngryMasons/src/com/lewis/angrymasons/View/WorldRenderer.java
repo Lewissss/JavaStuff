@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Array;
 import com.lewis.angrymasons.Model.Bullet;
-import com.lewis.angrymasons.Model.Follower;
+import com.lewis.angrymasons.Model.Enemy;
 import com.lewis.angrymasons.Model.Ship;
 
 public class WorldRenderer {
@@ -25,10 +25,12 @@ public class WorldRenderer {
 	Texture shipTexture, followerTexture, bulletTexture;
 	float width, height;
 	ShapeRenderer sr;
-	Follower follow;
 	Array<Bullet> bullets;
+	Array<Enemy> enemies;
 	Iterator<Bullet> bIter;
+	Iterator<Enemy> eIter;
 	Bullet b;
+	Enemy e;
 	
 	public WorldRenderer(World world){
 		this.world = world;
@@ -62,7 +64,7 @@ public class WorldRenderer {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		ship = world.getShip();	// Get ship position
-		follow = world.getFollower();
+		enemies = world.getEnemies();
 		bullets = world.getBullets();
 		
 		cam.position.set(ship.getPosition().x, ship.getPosition().y, 0);
@@ -73,8 +75,14 @@ public class WorldRenderer {
 		batch.draw(shipTexture, ship.getPosition().x, ship.getPosition().y, ship.getWidth() / 2,  ship.getHeight() / 2,  ship.getWidth(), ship.getHeight(), 1, 1, ship.getRotation(), 
 				0, 0, shipTexture.getWidth(), shipTexture.getHeight(), false, false);
 		
-		batch.draw(followerTexture, follow.getPosition().x, follow.getPosition().y, follow.getWidth() / 2, follow.getHeight() / 2, follow.getWidth(), follow.getHeight(), 1, 1, follow.getRotation(),
+		
+		eIter = enemies.iterator();
+		
+		while(eIter.hasNext()){	// Draw all enemies
+			e = eIter.next();	// Loop through
+		batch.draw(followerTexture, e.getPosition().x, e.getPosition().y, e.getWidth() / 2, e.getHeight() / 2, e.getWidth(), e.getHeight(), 1, 1, e.getRotation(),
 				0, 0, followerTexture.getWidth(), followerTexture.getHeight(), false, false);
+		}
 		
 		bIter = bullets.iterator();
 		while(bIter.hasNext()){
@@ -91,7 +99,18 @@ public class WorldRenderer {
 		sr.setColor(Color.CYAN);
 		sr.rect(ship.getBounds().x, ship.getBounds().y, ship.getBounds().width, ship.getBounds().height);
 		sr.setColor(Color.RED);
-		sr.rect(follow.getBounds().x, follow.getBounds().y, follow.getBounds().width, follow.getBounds().width);
+		
+		while(eIter.hasNext()){	// DrawRectangle for all enemies
+			e = eIter.next();	// Loop through
+			sr.rect(e.getBounds().x, e.getBounds().y, e.getBounds().width, e.getBounds().height);
+		}
+		
+		bIter = bullets.iterator();	// DrawRectangle for all bullets
+		while(bIter.hasNext()){
+			b = bIter.next();
+			sr.rect(b.getBounds().x, b.getBounds().y, b.getBounds().width, b.getBounds().height);
+		}
+		
 		sr.end();
 	}
 	
