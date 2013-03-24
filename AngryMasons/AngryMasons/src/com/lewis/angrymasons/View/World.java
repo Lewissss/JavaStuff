@@ -45,22 +45,32 @@ public class World {
 		while(bIter.hasNext()){
 			b = bIter.next();
 			b.update(ship);
+		}
+		
+		eIter = enemies.iterator();
+		while(eIter.hasNext()){
+			e = eIter.next();
+			e.advance(Gdx.graphics.getDeltaTime(), ship);
+			
+			if(ship.getBounds().overlaps(e.getBounds())){	// Ship and enemy
+				Gdx.app.log(AngryMasons.LOG, "Ship hitt!!");
+			}
+		}
+		
+		bIter = bullets.iterator();
+		while(bIter.hasNext()){
+			b = bIter.next();
 			
 			eIter = enemies.iterator();
 			while(eIter.hasNext()){
 			e = eIter.next();
-			e.advance(Gdx.graphics.getDeltaTime(), ship);	// Update enemy
-			
-			if(ship.getBounds().overlaps(e.getBounds())){	// Ship and enemy collision
-				Gdx.app.log(AngryMasons.LOG, "Ship hitt!!");
+					
+			if(e.getBounds().overlaps(b.getBounds())){		// Collision between bullet and enemy
+				Gdx.app.log(AngryMasons.LOG, "Enemy hit!");
+				eIter.remove();
+				bIter.remove();
 			}
-			
-				if(e.getBounds().overlaps(b.getBounds())){		// Collision between bullet and enemy
-					Gdx.app.log(AngryMasons.LOG, "Enemy hit!");
-					eIter.remove();
-					bIter.remove();
-				}
-			}
+		}
 		}
 	}
 	
