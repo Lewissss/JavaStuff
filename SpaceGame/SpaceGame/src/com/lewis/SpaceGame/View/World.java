@@ -14,7 +14,7 @@ public class World {
 	
 	public World(SpaceGame game){
 		this.game = game;
-		ship = new Ship(5f, 0, new Vector2(10, 10), 1, 1);
+		ship = new Ship(10f, 0, new Vector2(10, 10), 1, 1);
 		Gdx.input.setInputProcessor(new InputHandler(this));
 	}
 	
@@ -23,8 +23,7 @@ public class World {
 	}
 	
 	public void update(){
-		ship.update();
-		ship.checkPosition(wr.backgroundTexture.getWidth(), wr.backgroundTexture.getHeight());
+		ship.update(wr.backgroundTexture.getWidth() / wr.width, wr.backgroundTexture.getHeight() / wr.height);
 	}
 	
 	public void setRenderer(WorldRenderer wr){

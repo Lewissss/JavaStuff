@@ -97,7 +97,7 @@ public class WorldRenderer {
 		
 		//Render mapshape
 		sr.setColor(Color.RED);
-		sr.rect(0, 0, backgroundTexture.getWidth(), backgroundTexture.getHeight());
+		sr.rect(0, 0, backgroundTexture.getWidth() / width, backgroundTexture.getHeight() / height);
 		
 		sr.end();
 	}
