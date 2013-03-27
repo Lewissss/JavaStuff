@@ -18,7 +18,17 @@ public class Ship extends MoveableEntity {
 		
 		// Reset the bounds
 		bounds.x = position.x;
-		bounds.y = position.y;
+		bounds.y = position.y; 
+	}
+	
+	public void checkPosition(float mapWidth, float mapHeight){
+		
+		if(bounds.x < 0 || bounds.x > mapWidth){
+			position.x = 0;
+		}
+		if(bounds.y < 0 || bounds.y > mapHeight){
+			position.y = 0;
+		}
 	}
 
 }

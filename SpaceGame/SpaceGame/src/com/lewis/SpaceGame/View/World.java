@@ -10,6 +10,7 @@ public class World {
 	SpaceGame game;
 	WorldRenderer wr;
 	Ship ship;
+	float width, height;
 	
 	public World(SpaceGame game){
 		this.game = game;
@@ -23,6 +24,7 @@ public class World {
 	
 	public void update(){
 		ship.update();
+		ship.checkPosition(wr.backgroundTexture.getWidth(), wr.backgroundTexture.getHeight());
 	}
 	
 	public void setRenderer(WorldRenderer wr){
@@ -34,7 +36,6 @@ public class World {
 	}
 	
 	public void dispose(){
-		
 	}
 	
 }

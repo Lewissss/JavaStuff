@@ -1,12 +1,14 @@
 package com.lewis.SpaceGame.View;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lewis.SpaceGame.SpaceGame;
 import com.lewis.SpaceGame.Models.Ship;
 
@@ -22,6 +24,7 @@ public class WorldRenderer {
 	
 	//Textures
 	Texture shipTexture;
+	Texture backgroundTexture;
 	
 	public WorldRenderer(World world){
 		this.world = world;
@@ -41,6 +44,9 @@ public class WorldRenderer {
 		shipTexture = new Texture("data/ship.png");
 		shipTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		
+		backgroundTexture = new Texture("data/background.png");
+		backgroundTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		
 		sr = new ShapeRenderer();
 		
 	}
@@ -58,6 +64,8 @@ public class WorldRenderer {
 		
 		spriteBatch.begin();
 	
+		spriteBatch.draw(backgroundTexture, 0,  0,  backgroundTexture.getWidth() / width, backgroundTexture.getHeight() / height, 1, 1, backgroundTexture.getWidth(), backgroundTexture.getHeight(), false, false);
+		
 		spriteBatch.draw(shipTexture, ship.getPosition().x, ship.getPosition().y, ship.getWidth() / 2, ship.getHeight() / 2, ship.getWidth(), ship.getHeight(), 1, 1, ship.getRotation(),
 				0, 0, shipTexture.getWidth(), shipTexture.getHeight(), false, false);
 		
@@ -79,7 +87,19 @@ public class WorldRenderer {
 	}
 	
 	public void renderShapes(){
+		sr.setProjectionMatrix(camera.combined);
 		
+		sr.begin(ShapeType.Rectangle);
+		
+		//Render ship shape
+		sr.setColor(Color.CYAN);
+		sr.rect(ship.getBounds().x, ship.getBounds().y, ship.getWidth(), ship.getHeight());
+		
+		//Render mapshape
+		sr.setColor(Color.RED);
+		sr.rect(0, 0, backgroundTexture.getWidth(), backgroundTexture.getHeight());
+		
+		sr.end();
 	}
 
 }

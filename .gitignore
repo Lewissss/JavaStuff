@@ -202,3 +202,16 @@ version.ini
 /SpaceGame/.metadata/.plugins/org.eclipse.wst.jsdt.core/libraries/dom5.js
 /SpaceGame/.metadata/.plugins/org.eclipse.wst.jsdt.core/libraries/system.js
 /SpaceGame/.metadata/.plugins/org.eclipse.wst.jsdt.core/libraries/xhr.js
+
+/SpaceGame/.metadata/.plugins/com.google.gwt.eclipse.core/clientBundleResources
+/SpaceGame/.metadata/.plugins/com.google.gwt.eclipse.core/searchIndex
+/SpaceGame/.metadata/.plugins/com.google.gwt.eclipse.core/uiBinderReferences
+/SpaceGame/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.team.ui.prefs
+/SpaceGame/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.editors.prefs
+/SpaceGame/.metadata/.plugins/org.eclipse.debug.ui/dialog_settings.xml
+/SpaceGame/.metadata/.plugins/org.eclipse.jdt.debug.ui/dialog_settings.xml
+/SpaceGame/.metadata/.plugins/org.eclipse.ltk.ui.refactoring/dialog_settings.xml
+/SpaceGame/.metadata/.plugins/org.eclipse.pde.core/.cache/clean-cache.properties
+/SpaceGame/.metadata/.plugins/org.eclipse.ui.editors/dialog_settings.xml
+/SpaceGame/.metadata/.plugins/org.eclipse.wst.jsdt.ui/OpenTypeHistory.xml
+/SpaceGame/.metadata/.plugins/org.eclipse.wst.jsdt.ui/QualifiedTypeNameHistory.xml
