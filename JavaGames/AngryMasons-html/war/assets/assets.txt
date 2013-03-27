@@ -1,0 +1,15 @@
+d:
+d:data
+i:data/bullet.png
+t:data/button.pack
+i:data/button.png
+b:data/exhaust
+i:data/follower.png
+t:data/font.fnt
+b:data/font_0.tga
+i:data/particle.png
+i:data/ship.png
+i:data/splashscreen.png
+t:data/whitefont.fnt
+i:data/whitefont_0.png
+b:data/whitefont_0.tga
