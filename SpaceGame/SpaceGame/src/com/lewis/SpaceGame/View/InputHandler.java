@@ -2,12 +2,18 @@ package com.lewis.SpaceGame.View;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.lewis.SpaceGame.Models.Laser;
 import com.lewis.SpaceGame.Models.Ship;
 
 public class InputHandler implements InputProcessor {
 	
 	World world;
 	Ship ship;
+	
+	Vector3 touch = new Vector3();
+	Vector2 vec2Touch = new Vector2();
 	
 	public InputHandler(World world){
 		this.world = world;
@@ -78,8 +84,16 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
+		touch.set(screenX, screenY, 0);
+		world.getRenderer().getCamera().unproject(touch);
+		vec2Touch.set(touch.x, touch.y);
+		
+		ship = world.getShip();
+		
+		// Add laser
+		world.addLaser(new Laser(Laser.SPEED, 0f, new Vector2(ship.getPosition().x + (ship.getWidth() / 2), ship.getPosition().y + (ship.getHeight() / 2)), .1f, 8/20f, new Vector2(vec2Touch.sub(ship.getPosition()))));
+		
+		return true;
 	}
 
 	@Override
