@@ -84,12 +84,9 @@ public class WorldRenderer {
 		// Draw lasers
 		lIter = lasers.iterator();
 		while(lIter.hasNext()){
-			Gdx.app.log(SpaceGame.LOG, "Drawing...");
 			laser = lIter.next();
 			spriteBatch.draw(laserTexture, laser.getPosition().x, laser.getPosition().y, laser.getWidth() / 2, laser.getHeight() / 2, laser.getWidth(), laser.getHeight(), 1, 1, laser.getRotation(),
 					0, 0, laserTexture.getWidth(), laserTexture.getHeight(), false, false);
-			
-			Gdx.app.log(SpaceGame.LOG, "Position: " + laser.getPosition());
 		}
 		
 		spriteBatch.end();
@@ -106,6 +103,9 @@ public class WorldRenderer {
 	
 	public void dispose(){
 		spriteBatch.dispose();
+		shipTexture.dispose();
+		backgroundTexture.dispose();
+		laserTexture.dispose();
 		sr.dispose();
 	}
 	

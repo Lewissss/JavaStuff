@@ -37,6 +37,18 @@ public class World {
 		while(lIter.hasNext()){
 			l = lIter.next();
 			l.update(ship);
+			
+			checkBulletBounds();
+		}
+	}
+
+	private void checkBulletBounds() {
+		// Check if bullets in map
+		if(l.getPosition().x < 0 || l.getPosition().x > wr.backgroundTexture.getWidth() / wr.width){
+			lIter.remove();
+		}
+		if(l.getPosition().y < 0 || l.getPosition().y > wr.backgroundTexture.getHeight() / wr.height){
+			lIter.remove();
 		}
 	}
 	
