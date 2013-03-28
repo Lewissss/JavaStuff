@@ -8,6 +8,8 @@ import com.badlogic.gdx.utils.Array;
 import com.lewis.SpaceGame.SpaceGame;
 import com.lewis.SpaceGame.Models.Laser;
 import com.lewis.SpaceGame.Models.Ship;
+import com.lewis.SpaceGame.Models.Asteroid.Asteroid;
+import com.lewis.SpaceGame.Models.Asteroid.AsteroidSpawn;
 
 public class World {
 
@@ -20,10 +22,19 @@ public class World {
 	Iterator<Laser> lIter;
 	Laser l;
 	
+	AsteroidSpawn spawn1;
+	
+	Array<Asteroid> asteroids = new Array<Asteroid>();
+	Iterator<Asteroid> aIter;
+	Asteroid a;
+	
 	public World(SpaceGame game){
 		this.game = game;
 		ship = new Ship(10f, 0, new Vector2(10, 10), 1, 1);
 		Gdx.input.setInputProcessor(new InputHandler(this));
+		
+		spawn1 = new AsteroidSpawn(this, new Vector2(10 / 40, 10 / 40), 5);	//Create the spawner
+		asteroids = spawn1.getAsteroids();	//Populate this array with the spawner asteroids
 	}
 	
 	public Ship getShip(){
@@ -39,6 +50,13 @@ public class World {
 			l.update(ship);
 			
 			checkBulletBounds();
+		}	
+		
+		aIter = asteroids.iterator();
+		while(aIter.hasNext()){
+			a = aIter.next();
+			a.update();
+			Gdx.app.log(SpaceGame.LOG, a.getPosition().toString());
 		}
 	}
 
@@ -58,6 +76,10 @@ public class World {
 	
 	public Array<Laser> getLasers(){
 		return lasers;
+	}
+	
+	public Array<Asteroid> getAsteroids(){
+		return asteroids;
 	}
 	
 	public void setRenderer(WorldRenderer wr){

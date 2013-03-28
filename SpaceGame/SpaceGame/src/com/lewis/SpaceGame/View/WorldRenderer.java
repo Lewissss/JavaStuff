@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Array;
 import com.lewis.SpaceGame.SpaceGame;
 import com.lewis.SpaceGame.Models.Laser;
 import com.lewis.SpaceGame.Models.Ship;
+import com.lewis.SpaceGame.Models.Asteroid.Asteroid;
 
 public class WorldRenderer {
 	
@@ -30,10 +31,15 @@ public class WorldRenderer {
 	Iterator<Laser> lIter;
 	Laser laser;
 	
+	Array<Asteroid> asteroids = new Array<Asteroid>();
+	Iterator<Asteroid> aIter;
+	Asteroid asteroid;
+	
 	//Textures
 	Texture shipTexture;
 	Texture backgroundTexture;
 	Texture laserTexture;
+	Texture asteroidTexture;
 	
 	public WorldRenderer(World world){
 		this.world = world;
@@ -56,6 +62,9 @@ public class WorldRenderer {
 		backgroundTexture = new Texture("data/background.png");
 		backgroundTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		
+		asteroidTexture = new Texture("data/asteroid.png");
+		asteroidTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		
 		laserTexture = new Texture("data/laser.png");
 		
 		sr = new ShapeRenderer();
@@ -68,6 +77,7 @@ public class WorldRenderer {
 		
 		ship = world.getShip();
 		lasers = world.getLasers();
+		asteroids = world.getAsteroids();
 		
 		camera.position.set(ship.getPosition().x, ship.getPosition().y, 0);
 		camera.update();
@@ -87,6 +97,16 @@ public class WorldRenderer {
 			laser = lIter.next();
 			spriteBatch.draw(laserTexture, laser.getPosition().x, laser.getPosition().y, laser.getWidth() / 2, laser.getHeight() / 2, laser.getWidth(), laser.getHeight(), 1, 1, laser.getRotation(),
 					0, 0, laserTexture.getWidth(), laserTexture.getHeight(), false, false);
+		}
+		
+		// Draw asteroids
+		aIter = asteroids.iterator();
+		while(aIter.hasNext()){
+			asteroid = aIter.next();
+			spriteBatch.draw(asteroidTexture, asteroid.getPosition().x, asteroid.getPosition().y, asteroid.getWidth() / 2, asteroid.getHeight() / 2, asteroid.getWidth(), asteroid.getHeight(), 1, 1, asteroid.getRotation(),
+					0, 0, asteroidTexture.getWidth(), asteroidTexture.getHeight(), false, false);
+			
+			Gdx.app.log(SpaceGame.LOG, "Drawing");
 		}
 		
 		spriteBatch.end();
@@ -128,6 +148,14 @@ public class WorldRenderer {
 			laser = lIter.next();
 			sr.setColor(Color.PINK);
 			sr.rect(laser.getBounds().x, laser.getBounds().y, laserTexture.getWidth() / (width / 2), laserTexture.getHeight() / (height / 2));
+		}
+		
+		// Render asteroids
+		aIter = asteroids.iterator();
+		while(aIter.hasNext()){
+			asteroid = aIter.next();
+			sr.setColor(Color.GREEN);
+			sr.rect(asteroid.getBounds().x, asteroid.getBounds().y, asteroidTexture.getWidth() / (width / 2), asteroidTexture.getHeight() / (height / 2));
 		}
 		
 		sr.end();
