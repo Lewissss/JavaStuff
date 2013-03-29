@@ -22,7 +22,9 @@ public class World {
 	Iterator<Laser> lIter;
 	Laser l;
 	
-	AsteroidSpawn spawn1;
+	Array<AsteroidSpawn> spawners = new Array<AsteroidSpawn>();
+	Iterator<AsteroidSpawn> sIter;
+	AsteroidSpawn spawner;
 	
 	Array<Asteroid> asteroids = new Array<Asteroid>();
 	Iterator<Asteroid> aIter;
@@ -33,8 +35,14 @@ public class World {
 		ship = new Ship(10f, 0, new Vector2(10, 10), 1, 1);
 		Gdx.input.setInputProcessor(new InputHandler(this));
 		
-		spawn1 = new AsteroidSpawn(this, new Vector2(10 / 40, 10 / 40), 10);	//Create the spawner
-		asteroids = spawn1.getAsteroids();	//Populate this array with the spawner asteroids
+		spawners.add(new AsteroidSpawn(this, new Vector2(10 / 40, 10/ 40), 10));
+		spawners.add(new AsteroidSpawn(this, new Vector2(20, 20), 16));
+		
+		sIter = spawners.iterator();
+		while(sIter.hasNext()){
+			spawner = sIter.next();
+			asteroids.addAll(spawner.getAsteroids());	// Add all the asteroids spawned to the asteroids list
+		}	
 	}
 	
 	public Ship getShip(){
@@ -56,7 +64,6 @@ public class World {
 		while(aIter.hasNext()){
 			a = aIter.next();
 			a.update();
-			Gdx.app.log(SpaceGame.LOG, a.getPosition().toString());
 		}
 	}
 
@@ -70,8 +77,8 @@ public class World {
 		}
 	}
 	
-	public AsteroidSpawn getSpawner(){
-		return spawn1;
+	public Array<AsteroidSpawn> getSpawners(){
+		return spawners;
 	}
 	
 	public void addLaser(Laser l){

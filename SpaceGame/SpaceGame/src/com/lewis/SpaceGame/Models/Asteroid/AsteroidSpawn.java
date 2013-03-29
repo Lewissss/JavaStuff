@@ -15,9 +15,7 @@ public class AsteroidSpawn {
 	Vector2 position;
 	Array<Asteroid> asteroids = new Array<Asteroid>();
 	Iterator<Asteroid> aIter;
-	Iterator<Asteroid> tIter;
 	Asteroid asteroid;
-	Asteroid tempAsteroid;
 	float width, height;
 	
 	Random random;
@@ -26,19 +24,24 @@ public class AsteroidSpawn {
 		this.world = world;
 		this.position = position;
 		
-		spawnArea = new Rectangle(position.x, position.y, 300 / 40, 300 / 40);
+		spawnArea = new Rectangle(position.x, position.y, 400 / 40, 400 / 40);
 		
 		random = new Random();
 		
 		//Populate asteroid field
 		int n = random.nextInt(maxAsteroids);
 		
+		// Stop there been empty asteroid fields
+		if(n <= 1){
+			n = 2;
+		}
+		
 	    for(int i = 0; i < n; i++){
 	    	
 			int j = random.nextInt((int)spawnArea.width);
 			int x = random.nextInt((int)spawnArea.height);
 	    	
-			asteroids.add(new Asteroid(new Vector2(j, x), 1, 1));
+			asteroids.add(new Asteroid(new Vector2(position.x + j,position.y + x), 1, 1));
 			
 	    }
 	    

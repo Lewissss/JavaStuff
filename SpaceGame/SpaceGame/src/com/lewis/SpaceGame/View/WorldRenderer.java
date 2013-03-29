@@ -36,7 +36,9 @@ public class WorldRenderer {
 	Iterator<Asteroid> aIter;
 	Asteroid asteroid;
 	
-	AsteroidSpawn spawner;
+	Array<AsteroidSpawn> spawners = new Array<AsteroidSpawn>();
+	AsteroidSpawn spawn;
+	Iterator<AsteroidSpawn> sIter;
 	
 	//Textures
 	Texture shipTexture;
@@ -81,7 +83,7 @@ public class WorldRenderer {
 		ship = world.getShip();
 		lasers = world.getLasers();
 		asteroids = world.getAsteroids();
-		spawner = world.getSpawner();
+		spawners = world.getSpawners();
 		
 		camera.position.set(ship.getPosition().x, ship.getPosition().y, 0);
 		camera.update();
@@ -109,8 +111,6 @@ public class WorldRenderer {
 			asteroid = aIter.next();
 			spriteBatch.draw(asteroidTexture, asteroid.getPosition().x, asteroid.getPosition().y, asteroid.getWidth() / 2, asteroid.getHeight() / 2, asteroid.getWidth(), asteroid.getHeight(), 1, 1, asteroid.getRotation(),
 					0, 0, asteroidTexture.getWidth(), asteroidTexture.getHeight(), false, false);
-			
-			Gdx.app.log(SpaceGame.LOG, "Drawing");
 		}
 		
 		spriteBatch.end();
@@ -163,8 +163,13 @@ public class WorldRenderer {
 		}
 		
 		// Render asteroid field
-		sr.setColor(Color.YELLOW);
-		sr.rect(spawner.getPosition().x, spawner.getPosition().y, spawner.getWidth(), spawner.getHeight());
+		sIter = spawners.iterator();
+		while(sIter.hasNext()){
+			spawn = sIter.next();
+			
+			sr.setColor(Color.YELLOW);
+			sr.rect(spawn.getPosition().x, spawn.getPosition().y, spawn.getWidth(), spawn.getHeight());
+		}
 		
 		sr.end();
 	}
