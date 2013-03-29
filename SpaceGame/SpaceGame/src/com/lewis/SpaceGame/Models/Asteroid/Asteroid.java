@@ -19,7 +19,11 @@ public class Asteroid extends Entity {
 
 		random = new Random();
 		
-		SPEED = random.nextInt(4);
+		SPEED = random.nextInt(2);
+		
+		if(SPEED == 0){
+			SPEED = 1;
+		}
 		
 		rotation = random.nextInt(360);
 		

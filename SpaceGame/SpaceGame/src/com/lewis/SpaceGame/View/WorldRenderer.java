@@ -16,6 +16,7 @@ import com.lewis.SpaceGame.SpaceGame;
 import com.lewis.SpaceGame.Models.Laser;
 import com.lewis.SpaceGame.Models.Ship;
 import com.lewis.SpaceGame.Models.Asteroid.Asteroid;
+import com.lewis.SpaceGame.Models.Asteroid.AsteroidSpawn;
 
 public class WorldRenderer {
 	
@@ -34,6 +35,8 @@ public class WorldRenderer {
 	Array<Asteroid> asteroids = new Array<Asteroid>();
 	Iterator<Asteroid> aIter;
 	Asteroid asteroid;
+	
+	AsteroidSpawn spawner;
 	
 	//Textures
 	Texture shipTexture;
@@ -78,6 +81,7 @@ public class WorldRenderer {
 		ship = world.getShip();
 		lasers = world.getLasers();
 		asteroids = world.getAsteroids();
+		spawner = world.getSpawner();
 		
 		camera.position.set(ship.getPosition().x, ship.getPosition().y, 0);
 		camera.update();
@@ -155,8 +159,12 @@ public class WorldRenderer {
 		while(aIter.hasNext()){
 			asteroid = aIter.next();
 			sr.setColor(Color.GREEN);
-			sr.rect(asteroid.getBounds().x, asteroid.getBounds().y, asteroidTexture.getWidth() / (width / 2), asteroidTexture.getHeight() / (height / 2));
+			sr.rect(asteroid.getBounds().x, asteroid.getBounds().y, asteroid.getBounds().width, asteroid.getBounds().height);
 		}
+		
+		// Render asteroid field
+		sr.setColor(Color.YELLOW);
+		sr.rect(spawner.getPosition().x, spawner.getPosition().y, spawner.getWidth(), spawner.getHeight());
 		
 		sr.end();
 	}

@@ -33,7 +33,7 @@ public class World {
 		ship = new Ship(10f, 0, new Vector2(10, 10), 1, 1);
 		Gdx.input.setInputProcessor(new InputHandler(this));
 		
-		spawn1 = new AsteroidSpawn(this, new Vector2(10 / 40, 10 / 40), 5);	//Create the spawner
+		spawn1 = new AsteroidSpawn(this, new Vector2(10 / 40, 10 / 40), 10);	//Create the spawner
 		asteroids = spawn1.getAsteroids();	//Populate this array with the spawner asteroids
 	}
 	
@@ -68,6 +68,10 @@ public class World {
 		if(l.getPosition().y < 0 || l.getPosition().y > wr.backgroundTexture.getHeight() / wr.height){
 			lIter.remove();
 		}
+	}
+	
+	public AsteroidSpawn getSpawner(){
+		return spawn1;
 	}
 	
 	public void addLaser(Laser l){

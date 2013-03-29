@@ -1,5 +1,6 @@
 package com.lewis.SpaceGame.Models.Asteroid;
 
+import java.util.Iterator;
 import java.util.Random;
 
 import com.badlogic.gdx.math.Rectangle;
@@ -13,6 +14,11 @@ public class AsteroidSpawn {
 	Rectangle spawnArea;
 	Vector2 position;
 	Array<Asteroid> asteroids = new Array<Asteroid>();
+	Iterator<Asteroid> aIter;
+	Iterator<Asteroid> tIter;
+	Asteroid asteroid;
+	Asteroid tempAsteroid;
+	float width, height;
 	
 	Random random;
 	
@@ -20,25 +26,40 @@ public class AsteroidSpawn {
 		this.world = world;
 		this.position = position;
 		
-		spawnArea = new Rectangle(position.x, position.y, 100 / 40, 100 / 40);
+		spawnArea = new Rectangle(position.x, position.y, 300 / 40, 300 / 40);
 		
 		random = new Random();
 		
 		//Populate asteroid field
 		int n = random.nextInt(maxAsteroids);
 		
-	    for(int i = 0; i < 4; i++){
+	    for(int i = 0; i < n; i++){
 	    	
 			int j = random.nextInt((int)spawnArea.width);
 			int x = random.nextInt((int)spawnArea.height);
 	    	
 			asteroids.add(new Asteroid(new Vector2(j, x), 1, 1));
-		}
-		
+			
+	    }
+	    
+		width = spawnArea.width;
+		height = spawnArea.height;
 	}
 	
 	public Array<Asteroid> getAsteroids(){
 		return asteroids;
+	}
+	
+	public Vector2 getPosition(){
+		return position;
+	}
+	
+	public float getWidth(){
+		return width;
+	}
+	
+	public float getHeight(){
+		return height;
 	}
 	
 	
