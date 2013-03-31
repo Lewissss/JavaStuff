@@ -1,6 +1,7 @@
 package com.lewis.SpaceGame.View;
 
 import java.util.Iterator;
+import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -30,10 +31,14 @@ public class World {
 	Iterator<Asteroid> aIter;
 	Asteroid a;
 	
+	Random random;
+	
 	public World(SpaceGame game){
 		this.game = game;
 		ship = new Ship(10f, 0, new Vector2(10, 10), 1, 1);
 		Gdx.input.setInputProcessor(new InputHandler(this));
+		
+		random = new Random();
 		
 		spawners.add(new AsteroidSpawn(this, new Vector2(10 / 40, 10/ 40), 10));
 		spawners.add(new AsteroidSpawn(this, new Vector2(20, 20), 16));
@@ -57,6 +62,7 @@ public class World {
 		updateLasers();	
 		
 		updateAsteroids();
+		
 	}
 
 	private void updateAsteroids() {
@@ -64,6 +70,10 @@ public class World {
 		while(aIter.hasNext()){
 			a = aIter.next();
 			a.update();
+			
+			if(a.getStatus()){
+				aIter.remove();
+			}
 		}
 	}
 
@@ -99,8 +109,8 @@ public class World {
 			
 			// Check bullets against asteroids
 			if(l.getBounds().overlaps(a.getBounds())){
+				a.damageAsteroid(l.getDamage());
 				l.setVisible(false);
-				aIter.remove();
 			}
 		}
 	}

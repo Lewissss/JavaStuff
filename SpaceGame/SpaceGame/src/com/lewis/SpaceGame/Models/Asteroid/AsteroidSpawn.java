@@ -13,7 +13,7 @@ public class AsteroidSpawn {
 	World world;
 	Rectangle spawnArea;
 	Vector2 position;
-	Array<Asteroid> asteroids = new Array<Asteroid>();
+	protected Array<Asteroid> asteroids = new Array<Asteroid>();
 	Iterator<Asteroid> aIter;
 	Asteroid asteroid;
 	float width, height;
@@ -41,8 +41,7 @@ public class AsteroidSpawn {
 			int j = random.nextInt((int)spawnArea.width);
 			int x = random.nextInt((int)spawnArea.height);
 	    	
-			asteroids.add(new Asteroid(new Vector2(position.x + j,position.y + x), 1, 1));
-			
+			asteroids.add(new Asteroid(new Vector2(position.x + j,position.y + x), 1, 1));			
 	    }
 	    
 		width = spawnArea.width;
@@ -64,6 +63,6 @@ public class AsteroidSpawn {
 	public float getHeight(){
 		return height;
 	}
-	
-	
+
+	// TODO Move asteroid spawner once its empty
 }

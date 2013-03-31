@@ -171,8 +171,8 @@ public class WorldRenderer {
 			sr.setColor(Color.GREEN);
 			sr.rect(asteroid.getBounds().x, asteroid.getBounds().y, asteroid.getBounds().width, asteroid.getBounds().height);
 			
-			cr.setColor(Color.WHITE);
-			cr.circle(asteroid.getActivationArea().x, asteroid.getActivationArea().y, asteroid.getActivationArea().radius);
+			sr.setColor(Color.WHITE);
+			sr.rect(asteroid.getActivationArea().x, asteroid.getActivationArea().y, asteroid.getActivationArea().width, asteroid.getActivationArea().height);
 		}
 		cr.end();
 		
