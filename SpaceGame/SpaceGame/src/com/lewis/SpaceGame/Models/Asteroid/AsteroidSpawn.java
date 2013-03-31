@@ -24,7 +24,7 @@ public class AsteroidSpawn {
 		this.world = world;
 		this.position = position;
 		
-		spawnArea = new Rectangle(position.x, position.y, 400 / 40, 400 / 40);
+		spawnArea = new Rectangle(position.x, position.y, 450 / 40, 450 / 40);
 		
 		random = new Random();
 		

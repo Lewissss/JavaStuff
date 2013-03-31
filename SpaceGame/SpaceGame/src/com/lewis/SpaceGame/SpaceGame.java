@@ -8,7 +8,7 @@ public class SpaceGame extends Game {
 	
 	public static final String VERSION = "0.0.0.08 Pre-Alpha";
 	public static final String LOG = "SpaceGame";
-	public static final boolean DEBUG = true;
+	public static boolean DEBUG = true;
 	
 	FPSLogger log;
 	

@@ -37,6 +37,8 @@ public class World {
 		
 		spawners.add(new AsteroidSpawn(this, new Vector2(10 / 40, 10/ 40), 10));
 		spawners.add(new AsteroidSpawn(this, new Vector2(20, 20), 16));
+		spawners.add(new AsteroidSpawn(this, new Vector2(10 / 40, 15), 13));
+		spawners.add(new AsteroidSpawn(this, new Vector2(35, 35), 13));
 		
 		sIter = spawners.iterator();
 		while(sIter.hasNext()){
@@ -52,14 +54,12 @@ public class World {
 	public void update(){
 		ship.update(wr.backgroundTexture.getWidth() / wr.width, wr.backgroundTexture.getHeight() / wr.height);
 		
-		lIter = lasers.iterator();
-		while(lIter.hasNext()){
-			l = lIter.next();
-			l.update(ship);
-			
-			checkBulletBounds();
-		}	
+		updateLasers();	
 		
+		updateAsteroids();
+	}
+
+	private void updateAsteroids() {
 		aIter = asteroids.iterator();
 		while(aIter.hasNext()){
 			a = aIter.next();
@@ -67,13 +67,41 @@ public class World {
 		}
 	}
 
-	private void checkBulletBounds() {
+	private void updateLasers() {
+		lIter = lasers.iterator();
+		while(lIter.hasNext()){
+			l = lIter.next();
+			
+			if(l.getVisible()){			// Only check collisions when visible
+				checkBulletCollision();
+			}
+			
+			if(l.getIsDead()){	// Remove dead lasers
+				lIter.remove();
+			}
+			
+			l.update(ship);
+		}
+	}
+
+	private void checkBulletCollision() {
 		// Check if bullets in map
 		if(l.getPosition().x < 0 || l.getPosition().x > wr.backgroundTexture.getWidth() / wr.width){
-			lIter.remove();
+			l.setVisible(false);;
 		}
 		if(l.getPosition().y < 0 || l.getPosition().y > wr.backgroundTexture.getHeight() / wr.height){
-			lIter.remove();
+			l.setVisible(false);
+		}
+		
+		aIter = asteroids.iterator();
+		while(aIter.hasNext()){
+			a = aIter.next();
+			
+			// Check bullets against asteroids
+			if(l.getBounds().overlaps(a.getBounds())){
+				l.setVisible(false);
+				aIter.remove();
+			}
 		}
 	}
 	
@@ -102,6 +130,7 @@ public class World {
 	}
 	
 	public void dispose(){
+		wr.dispose();
 	}
 	
 }

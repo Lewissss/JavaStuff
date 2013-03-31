@@ -24,6 +24,7 @@ public class WorldRenderer {
 	OrthographicCamera camera;
 	float width, height;
 	ShapeRenderer sr;
+	ShapeRenderer cr;	// For circles
 	
 	Ship ship;
 	World world;
@@ -73,6 +74,7 @@ public class WorldRenderer {
 		laserTexture = new Texture("data/laser.png");
 		
 		sr = new ShapeRenderer();
+		cr = new ShapeRenderer();
 		
 	}
 	
@@ -101,8 +103,11 @@ public class WorldRenderer {
 		lIter = lasers.iterator();
 		while(lIter.hasNext()){
 			laser = lIter.next();
-			spriteBatch.draw(laserTexture, laser.getPosition().x, laser.getPosition().y, laser.getWidth() / 2, laser.getHeight() / 2, laser.getWidth(), laser.getHeight(), 1, 1, laser.getRotation(),
-					0, 0, laserTexture.getWidth(), laserTexture.getHeight(), false, false);
+			if(laser.getVisible())	// Only render the visible lasers
+			{
+				spriteBatch.draw(laserTexture, laser.getPosition().x, laser.getPosition().y, laser.getWidth() / 2, laser.getHeight() / 2, laser.getWidth(), laser.getHeight(), 1, 1, laser.getRotation(),
+						0, 0, laserTexture.getWidth(), laserTexture.getHeight(), false, false);
+			}
 		}
 		
 		// Draw asteroids
@@ -135,6 +140,7 @@ public class WorldRenderer {
 	
 	public void renderShapes(){
 		sr.setProjectionMatrix(camera.combined);
+		cr.setProjectionMatrix(camera.combined);
 		
 		sr.begin(ShapeType.Rectangle);
 		
@@ -150,17 +156,25 @@ public class WorldRenderer {
 		lIter = lasers.iterator();
 		while(lIter.hasNext()){
 			laser = lIter.next();
-			sr.setColor(Color.PINK);
-			sr.rect(laser.getBounds().x, laser.getBounds().y, laserTexture.getWidth() / (width / 2), laserTexture.getHeight() / (height / 2));
+			if(laser.getVisible())
+			{
+				sr.setColor(Color.PINK);
+				sr.rect(laser.getBounds().x, laser.getBounds().y, laserTexture.getWidth() / (width / 2), laserTexture.getHeight() / (height / 2));
+			}
 		}
 		
+		cr.begin(ShapeType.Circle);
 		// Render asteroids
 		aIter = asteroids.iterator();
 		while(aIter.hasNext()){
 			asteroid = aIter.next();
 			sr.setColor(Color.GREEN);
 			sr.rect(asteroid.getBounds().x, asteroid.getBounds().y, asteroid.getBounds().width, asteroid.getBounds().height);
+			
+			cr.setColor(Color.WHITE);
+			cr.circle(asteroid.getActivationArea().x, asteroid.getActivationArea().y, asteroid.getActivationArea().radius);
 		}
+		cr.end();
 		
 		// Render asteroid field
 		sIter = spawners.iterator();

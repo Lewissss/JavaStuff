@@ -4,6 +4,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.lewis.SpaceGame.SpaceGame;
 import com.lewis.SpaceGame.Models.Laser;
 import com.lewis.SpaceGame.Models.Ship;
 
@@ -37,6 +38,10 @@ public class InputHandler implements InputProcessor {
 			break;
 		case Keys.D:
 			ship.getVelocity().x = 1;
+			break;
+			//DEBUG	
+		case Keys.M:
+			SpaceGame.DEBUG = !SpaceGame.DEBUG;
 			break;
 		case Keys.ESCAPE:
 			System.exit(0);
@@ -91,8 +96,8 @@ public class InputHandler implements InputProcessor {
 		ship = world.getShip();
 		
 		// Add laser
-		world.addLaser(new Laser(Laser.SPEED, 0f, new Vector2(ship.getPosition().x + (ship.getWidth() / 2), 
-				ship.getPosition().y + (ship.getHeight() / 2)), .1f, 8/20f, new Vector2(vec2Touch.sub(ship.getPosition()))));
+		world.addLaser(new Laser(Laser.SPEED, 0f, new Vector2(ship.getPosition().x + ship.getWidth() / 2, 
+				ship.getPosition().y + ship.getHeight() / 2), .1f, 8/20f, new Vector2(vec2Touch.sub(ship.getOrigin()))));
 		
 		return true;
 	}
@@ -102,7 +107,7 @@ public class InputHandler implements InputProcessor {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		// TODO Auto-generated method stub
