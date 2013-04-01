@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Array;
 import com.lewis.SpaceGame.SpaceGame;
 import com.lewis.SpaceGame.Models.Laser;
+import com.lewis.SpaceGame.Models.Miner;
 import com.lewis.SpaceGame.Models.Ship;
 import com.lewis.SpaceGame.Models.Asteroid.Asteroid;
 import com.lewis.SpaceGame.Models.Asteroid.AsteroidSpawn;
@@ -41,11 +42,16 @@ public class WorldRenderer {
 	AsteroidSpawn spawn;
 	Iterator<AsteroidSpawn> sIter;
 	
+	Array<Miner> miners = new Array<Miner>();
+	Miner miner;
+	Iterator<Miner> mIter;
+	
 	//Textures
 	Texture shipTexture;
 	Texture backgroundTexture;
 	Texture laserTexture;
 	Texture asteroidTexture;
+	Texture minerTexture;
 	
 	public WorldRenderer(World world){
 		this.world = world;
@@ -73,6 +79,9 @@ public class WorldRenderer {
 		
 		laserTexture = new Texture("data/laser.png");
 		
+		minerTexture = new Texture("data/miner.png");
+		minerTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		
 		sr = new ShapeRenderer();
 		cr = new ShapeRenderer();
 		
@@ -86,6 +95,7 @@ public class WorldRenderer {
 		lasers = world.getLasers();
 		asteroids = world.getAsteroids();
 		spawners = world.getSpawners();
+		miners = world.getMiners();
 		
 		camera.position.set(ship.getPosition().x, ship.getPosition().y, 0);
 		camera.update();
@@ -116,6 +126,18 @@ public class WorldRenderer {
 			asteroid = aIter.next();
 			spriteBatch.draw(asteroidTexture, asteroid.getPosition().x, asteroid.getPosition().y, asteroid.getWidth() / 2, asteroid.getHeight() / 2, asteroid.getWidth(), asteroid.getHeight(), 1, 1, asteroid.getRotation(),
 					0, 0, asteroidTexture.getWidth(), asteroidTexture.getHeight(), false, false);
+		}
+		
+		// Draw miners
+		mIter = miners.iterator();
+		while(mIter.hasNext()){
+			miner = mIter.next();
+			
+			spriteBatch.draw(minerTexture, miner.getPosition().x, miner.getPosition().y, miner.getWidth() / 2, miner.getHeight() / 2, miner.getWidth(), miner.getHeight(), 1, 1, miner.getRotation(),
+				0, 0, minerTexture.getWidth(), minerTexture.getHeight(), false, false);
+			
+			// Draw miner lasers
+			miner.draw(spriteBatch, laserTexture);
 		}
 		
 		spriteBatch.end();
@@ -164,6 +186,7 @@ public class WorldRenderer {
 		}
 		
 		cr.begin(ShapeType.Circle);
+		
 		// Render asteroids
 		aIter = asteroids.iterator();
 		while(aIter.hasNext()){
@@ -183,6 +206,15 @@ public class WorldRenderer {
 			
 			sr.setColor(Color.YELLOW);
 			sr.rect(spawn.getPosition().x, spawn.getPosition().y, spawn.getWidth(), spawn.getHeight());
+		}
+		
+		//Render miner
+		mIter = miners.iterator();
+		while(mIter.hasNext()){
+			miner = mIter.next();
+			
+			sr.setColor(Color.ORANGE);
+			sr.rect(miner.getPosition().x, miner.getPosition().y, miner.getWidth(), miner.getHeight());
 		}
 		
 		sr.end();

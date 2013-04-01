@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.lewis.SpaceGame.SpaceGame;
 import com.lewis.SpaceGame.Models.Laser;
+import com.lewis.SpaceGame.Models.Miner;
 import com.lewis.SpaceGame.Models.Ship;
 import com.lewis.SpaceGame.Models.Asteroid.Asteroid;
 import com.lewis.SpaceGame.Models.Asteroid.AsteroidSpawn;
@@ -31,6 +32,10 @@ public class World {
 	Iterator<Asteroid> aIter;
 	Asteroid a;
 	
+	Array<Miner> miners = new Array<Miner>();
+	Iterator<Miner> mIter;
+	Miner m;
+	
 	Random random;
 	
 	public World(SpaceGame game){
@@ -50,19 +55,36 @@ public class World {
 			spawner = sIter.next();
 			asteroids.addAll(spawner.getAsteroids());	// Add all the asteroids spawned to the asteroids list
 		}	
+		
+		miners.add(new Miner(6f, 9, new Vector2(10, 10), 1, 1, this, asteroids.random()));
+		miners.add(new Miner(6f, 9, new Vector2(15, 10), 1, 1, this, asteroids.random()));
+		miners.add(new Miner(6f, 9, new Vector2(20, 10), 1, 1, this, asteroids.random()));
+		miners.add(new Miner(6f, 9, new Vector2(25, 10), 1, 1, this, asteroids.random()));
+		miners.add(new Miner(6f, 9, new Vector2(30, 10), 1, 1, this, asteroids.random()));
+		miners.add(new Miner(6f, 9, new Vector2(35, 10), 1, 1, this, asteroids.random()));
+		miners.add(new Miner(6f, 9, new Vector2(40, 10), 1, 1, this, asteroids.random()));
+		miners.add(new Miner(6f, 9, new Vector2(45, 10), 1, 1, this, asteroids.random()));
 	}
 	
 	public Ship getShip(){
 		return ship;
 	}
 	
-	public void update(){
+	public void update(){		
 		ship.update(wr.backgroundTexture.getWidth() / wr.width, wr.backgroundTexture.getHeight() / wr.height);
-		
 		updateLasers();	
-		
 		updateAsteroids();
 		
+		updateMiners();
+	}
+
+	private void updateMiners() {
+		//Update miner
+		mIter = miners.iterator();
+		while(mIter.hasNext()){
+			m = mIter.next();
+			m.update(wr.backgroundTexture.getWidth(), wr.backgroundTexture.getHeight());
+		}
 	}
 
 	private void updateAsteroids() {
@@ -94,10 +116,10 @@ public class World {
 		}
 	}
 
-	private void checkBulletCollision() {
+	public void checkBulletCollision() {
 		// Check if bullets in map
 		if(l.getPosition().x < 0 || l.getPosition().x > wr.backgroundTexture.getWidth() / wr.width){
-			l.setVisible(false);;
+			l.setVisible(false);
 		}
 		if(l.getPosition().y < 0 || l.getPosition().y > wr.backgroundTexture.getHeight() / wr.height){
 			l.setVisible(false);
@@ -121,6 +143,10 @@ public class World {
 	
 	public void addLaser(Laser l){
 		lasers.add(l);
+	}
+	
+	public Array<Miner> getMiners(){
+		return miners;
 	}
 	
 	public Array<Laser> getLasers(){

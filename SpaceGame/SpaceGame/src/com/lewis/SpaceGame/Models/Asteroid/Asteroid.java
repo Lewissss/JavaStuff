@@ -33,8 +33,8 @@ public class Asteroid extends Entity {
 		
 		bounds = new Rectangle(position.x, position.y, width, height);
 		
-		aWidth = width * 7;
-		aHeight = height * 7;
+		aWidth = width * 5;
+		aHeight = height * 5;
 		
 		//Activation area used for mining drones. No need to update because they don't move.
 		activationArea = new Rectangle(bounds.x - (aWidth / 2) + (width / 2), bounds.y - (aHeight / 2) + (height / 2), aWidth, aHeight);

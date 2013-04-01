@@ -53,7 +53,7 @@ public class MoveableEntity extends Entity {
 		this.rotation = rotation;
 	}
 	
-	public void update(Ship ship){
+	public void update(Entity e){
 		bounds.x = position.x;
 		bounds.y = position.y;
 	}
