@@ -48,7 +48,7 @@ public class World {
 		spawners.add(new AsteroidSpawn(this, new Vector2(10 / 40, 10/ 40), 10));
 		spawners.add(new AsteroidSpawn(this, new Vector2(20, 20), 16));
 		spawners.add(new AsteroidSpawn(this, new Vector2(10 / 40, 15), 13));
-		spawners.add(new AsteroidSpawn(this, new Vector2(35, 35), 13));
+		spawners.add(new AsteroidSpawn(this, new Vector2(25, 35), 13));
 		
 		sIter = spawners.iterator();
 		while(sIter.hasNext()){
@@ -60,10 +60,6 @@ public class World {
 		miners.add(new Miner(6f, 9, new Vector2(15, 10), 1, 1, this, asteroids.random()));
 		miners.add(new Miner(6f, 9, new Vector2(20, 10), 1, 1, this, asteroids.random()));
 		miners.add(new Miner(6f, 9, new Vector2(25, 10), 1, 1, this, asteroids.random()));
-		miners.add(new Miner(6f, 9, new Vector2(30, 10), 1, 1, this, asteroids.random()));
-		miners.add(new Miner(6f, 9, new Vector2(35, 10), 1, 1, this, asteroids.random()));
-		miners.add(new Miner(6f, 9, new Vector2(40, 10), 1, 1, this, asteroids.random()));
-		miners.add(new Miner(6f, 9, new Vector2(45, 10), 1, 1, this, asteroids.random()));
 	}
 	
 	public Ship getShip(){

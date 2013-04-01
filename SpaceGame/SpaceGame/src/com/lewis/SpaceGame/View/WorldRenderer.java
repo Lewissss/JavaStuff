@@ -157,6 +157,7 @@ public class WorldRenderer {
 		shipTexture.dispose();
 		backgroundTexture.dispose();
 		laserTexture.dispose();
+		minerTexture.dispose();
 		sr.dispose();
 	}
 	
