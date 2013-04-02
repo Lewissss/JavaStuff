@@ -65,9 +65,6 @@ public class Miner extends MoveableEntity {
 		origin = new Vector2(position.x - (width / 2), position.y - (width / 2));
 	}
 
-	/**
-	 * 
-	 */
 	private void rotate() {
 		rotation += 3;
 		
@@ -152,7 +149,7 @@ public class Miner extends MoveableEntity {
 	
 	public Laser Shoot(Asteroid a){
 		return new Laser(Laser.SPEED, 0f, new Vector2(bounds.x + width / 2, 
-				bounds.y + height / 2), .1f, 8/20f, new Vector2(asteroidPosition.sub(origin)), 5f);
+				bounds.y + height / 2), .1f, 8/20f, new Vector2(asteroidPosition.sub(origin)), 5f, true);
 	}
 	
 	// Draw lasers

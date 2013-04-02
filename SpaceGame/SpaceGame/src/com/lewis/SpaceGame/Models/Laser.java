@@ -13,12 +13,14 @@ public class Laser extends MoveableEntity {
 	boolean isVisible = true;
 	boolean isDead = false;
 	float lifeTimer = 0;
+	boolean isRed;
 	
 	
-	public Laser(float SPEED, float rotation, Vector2 position, float width, float height, Vector2 velocity, float DAMAGE) {
+	public Laser(float SPEED, float rotation, Vector2 position, float width, float height, Vector2 velocity, float DAMAGE, boolean isRed) {
 		super(SPEED, rotation, position, width, height);
 		this.velocity = velocity;
 		this.DAMAGE = DAMAGE;
+		this.isRed = isRed;
 	}
 	
 	
@@ -61,6 +63,10 @@ public class Laser extends MoveableEntity {
 	
 	public boolean getVisible(){
 		return isVisible;
+	}
+	
+	public boolean getIsRed(){
+		return isRed;
 	}
 
 }

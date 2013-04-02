@@ -16,6 +16,7 @@ import com.lewis.SpaceGame.SpaceGame;
 import com.lewis.SpaceGame.Models.Laser;
 import com.lewis.SpaceGame.Models.Miner;
 import com.lewis.SpaceGame.Models.Ship;
+import com.lewis.SpaceGame.Models.SpaceStation;
 import com.lewis.SpaceGame.Models.Asteroid.Asteroid;
 import com.lewis.SpaceGame.Models.Asteroid.AsteroidSpawn;
 
@@ -46,12 +47,17 @@ public class WorldRenderer {
 	Miner miner;
 	Iterator<Miner> mIter;
 	
+	SpaceStation redTeamS;
+	SpaceStation blueTeamS;
+	
 	//Textures
 	Texture shipTexture;
 	Texture backgroundTexture;
 	Texture laserTexture;
 	Texture asteroidTexture;
 	Texture minerTexture;
+	Texture blueTeamStation;
+	Texture redTeamStation;
 	
 	public WorldRenderer(World world){
 		this.world = world;
@@ -82,6 +88,11 @@ public class WorldRenderer {
 		minerTexture = new Texture("data/miner.png");
 		minerTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		
+		blueTeamStation = new Texture("data/blueteam.png");
+		redTeamStation = new Texture("data/redteam.png");
+		
+		blueTeamStation.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		
 		sr = new ShapeRenderer();
 		cr = new ShapeRenderer();
 		
@@ -96,6 +107,8 @@ public class WorldRenderer {
 		asteroids = world.getAsteroids();
 		spawners = world.getSpawners();
 		miners = world.getMiners();
+		blueTeamS = world.getBlueTeam();
+		redTeamS = world.getRedTeam();
 		
 		camera.position.set(ship.getPosition().x, ship.getPosition().y, 0);
 		camera.update();
@@ -106,6 +119,16 @@ public class WorldRenderer {
 	
 		spriteBatch.draw(backgroundTexture, 0,  0,  backgroundTexture.getWidth() / width, backgroundTexture.getHeight() / height, 1, 1, backgroundTexture.getWidth(), backgroundTexture.getHeight(), false, false);
 		
+		//Draw spacestations
+		//Blue station
+		spriteBatch.draw(blueTeamStation, blueTeamS.getPosition().x, blueTeamS.getPosition().y, blueTeamS.getWidth() / 2, blueTeamS.getHeight() / 2, blueTeamS.getWidth(), blueTeamS.getHeight(), 1, 1, 0,
+				0, 0, blueTeamStation.getWidth(), blueTeamStation.getHeight(), false, false);
+		//Red station
+		spriteBatch.draw(redTeamStation, redTeamS.getPosition().x, redTeamS.getPosition().y, redTeamS.getWidth() / 2, redTeamS.getHeight() / 2, redTeamS.getWidth(), redTeamS.getHeight(), 1, 1, 0,
+				0, 0, redTeamStation.getWidth(), redTeamStation.getHeight(), false, false);
+		
+		
+		// Draw ship
 		spriteBatch.draw(shipTexture, ship.getPosition().x, ship.getPosition().y, ship.getWidth() / 2, ship.getHeight() / 2, ship.getWidth(), ship.getHeight(), 1, 1, ship.getRotation(),
 				0, 0, shipTexture.getWidth(), shipTexture.getHeight(), false, false);
 		
@@ -217,6 +240,11 @@ public class WorldRenderer {
 			sr.setColor(Color.ORANGE);
 			sr.rect(miner.getPosition().x, miner.getPosition().y, miner.getWidth(), miner.getHeight());
 		}
+		
+		//Render spacestations
+		sr.setColor(Color.YELLOW);
+		sr.rect(blueTeamS.getPosition().x, blueTeamS.getPosition().y, blueTeamS.getWidth(), blueTeamS.getHeight());
+		sr.rect(redTeamS.getPosition().x, redTeamS.getPosition().y, redTeamS.getWidth(), redTeamS.getHeight());
 		
 		sr.end();
 	}

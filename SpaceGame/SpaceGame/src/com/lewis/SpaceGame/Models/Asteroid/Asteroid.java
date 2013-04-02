@@ -31,7 +31,7 @@ public class Asteroid extends Entity {
 		
 		rotation = random.nextInt(360);
 		
-		bounds = new Rectangle(position.x, position.y, width, height);
+		bounds = new Rectangle(position.x, position.y, width - 1, height - 1);
 		
 		aWidth = width * 5;
 		aHeight = height * 5;

@@ -10,6 +10,7 @@ import com.lewis.SpaceGame.SpaceGame;
 import com.lewis.SpaceGame.Models.Laser;
 import com.lewis.SpaceGame.Models.Miner;
 import com.lewis.SpaceGame.Models.Ship;
+import com.lewis.SpaceGame.Models.SpaceStation;
 import com.lewis.SpaceGame.Models.Asteroid.Asteroid;
 import com.lewis.SpaceGame.Models.Asteroid.AsteroidSpawn;
 
@@ -36,19 +37,27 @@ public class World {
 	Iterator<Miner> mIter;
 	Miner m;
 	
+	SpaceStation redTeamStation;
+	SpaceStation blueTeamStation;
+	
 	Random random;
 	
 	public World(SpaceGame game){
 		this.game = game;
-		ship = new Ship(10f, 0, new Vector2(10, 10), 1, 1);
+		ship = new Ship(15f, 0, new Vector2(10, 10), 1, 1);
 		Gdx.input.setInputProcessor(new InputHandler(this));
 		
 		random = new Random();
 		
-		spawners.add(new AsteroidSpawn(this, new Vector2(10 / 40, 10/ 40), 10));
+		spawners.add(new AsteroidSpawn(this, new Vector2(15, 6), 10));
 		spawners.add(new AsteroidSpawn(this, new Vector2(20, 20), 16));
-		spawners.add(new AsteroidSpawn(this, new Vector2(10 / 40, 15), 13));
+		spawners.add(new AsteroidSpawn(this, new Vector2(0, 15), 13));
 		spawners.add(new AsteroidSpawn(this, new Vector2(25, 35), 13));
+		
+		
+		// SpaceStations
+		redTeamStation = new SpaceStation(new Vector2(3, 3), 6, 6, true);
+		blueTeamStation = new SpaceStation(new Vector2(10, 10), 6, 6, false);
 		
 		sIter = spawners.iterator();
 		while(sIter.hasNext()){
@@ -70,6 +79,12 @@ public class World {
 		ship.update(wr.backgroundTexture.getWidth() / wr.width, wr.backgroundTexture.getHeight() / wr.height);
 		updateLasers();	
 		updateAsteroids();
+		
+		blueTeamStation.update();
+		redTeamStation.update();
+		
+		blueTeamStation.getPosition().x = (wr.backgroundTexture.getWidth() / wr.width) - (blueTeamStation.getWidth()) - 3;
+		blueTeamStation.getPosition().y = (wr.backgroundTexture.getHeight() / wr.height) - (blueTeamStation.getHeight()) - 3;
 		
 		updateMiners();
 	}
@@ -131,6 +146,20 @@ public class World {
 				l.setVisible(false);
 			}
 		}
+		
+		if(l.getBounds().overlaps(blueTeamStation.getBounds())){
+			if(l.getIsRed()){
+				blueTeamStation.damage(l.getDamage());
+				l.setVisible(false);
+			}
+		}
+		
+		if(l.getBounds().overlaps(redTeamStation.getBounds())){
+			if(!l.getIsRed()){
+				redTeamStation.damage(l.getDamage());
+				l.setVisible(false);
+			}
+		}
 	}
 	
 	public Array<AsteroidSpawn> getSpawners(){
@@ -159,6 +188,14 @@ public class World {
 	
 	public WorldRenderer getRenderer(){
 		return wr;
+	}
+	
+	public SpaceStation getBlueTeam(){
+		return blueTeamStation;
+	}
+	
+	public SpaceStation getRedTeam(){
+		return redTeamStation;
 	}
 	
 	public void dispose(){

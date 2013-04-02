@@ -95,8 +95,10 @@ public class InputHandler implements InputProcessor {
 		ship = world.getShip();
 		
 		// Add laser
-		world.addLaser(new Laser(Laser.SPEED, 0f, new Vector2(ship.getPosition().x + ship.getWidth() / 2, 
-				ship.getPosition().y + ship.getHeight() / 2), .1f, 8/20f, new Vector2(vec2Touch.sub(ship.getOrigin())), 10f));
+		if(button == 0){	//0 is the left click on a mouse
+			world.addLaser(new Laser(Laser.SPEED, 0f, new Vector2(ship.getPosition().x + ship.getWidth() / 2, 
+				ship.getPosition().y + ship.getHeight() / 2), .1f, 8/20f, new Vector2(vec2Touch.sub(ship.getOrigin())), 10f, true));
+		}
 		
 		return true;
 	}
