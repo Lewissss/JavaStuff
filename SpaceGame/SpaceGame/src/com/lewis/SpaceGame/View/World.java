@@ -104,6 +104,7 @@ public class World {
 			
 			// Remove deads
 			if(m.getStatus()){
+				miners.add(new Miner(6f, 9, new Vector2(165, 218), 1, 1, this, asteroids.random(), blue));	// Create a new one
 				mIter.remove();
 			}
 		}
@@ -176,9 +177,11 @@ public class World {
 		while(mIter.hasNext()){
 			m = mIter.next();
 			
+			// Only allow damage to blue (By player lasers)
 			if(l.getBounds().overlaps(m.getBounds())){
 				if(m.getTeam() != l.getTeam()){
 					m.Damage(l.DAMAGE);
+					
 					l.setVisible(false);
 				}
 			}
