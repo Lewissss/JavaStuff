@@ -9,7 +9,7 @@ public class GameScreen implements Screen {
 	
 	SpaceGame game;
 	World world;
-	WorldRenderer render;
+	public WorldRenderer render;
 	
 	public GameScreen(SpaceGame game){
 		this.game = game;

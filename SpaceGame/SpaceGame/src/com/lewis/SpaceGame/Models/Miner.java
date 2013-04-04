@@ -13,6 +13,8 @@ import com.lewis.SpaceGame.View.World;
 public class Miner extends MoveableEntity {
 
 	boolean inActive = false;
+	boolean isDead = false;
+	float HEALTH = 30f;
 	Vector2 origin;
 	float XDistance;
 	float YDistance;
@@ -29,14 +31,16 @@ public class Miner extends MoveableEntity {
 	boolean targets = false;
 	
 	World world;
+	Team team;
 	
-	public Miner(float SPEED, float rotation, Vector2 position, float width, float height, World world, Asteroid a) {
+	public Miner(float SPEED, float rotation, Vector2 position, float width, float height, World world, Asteroid a, Team team) {
 		super(SPEED, rotation, position, width, height);
 		
 		this.world = world;
 		nlasers = new Array<Laser>();
 		this.a = a;
 		timer = interval;
+		this.team = team;
 	}
 	
 	public void update(float mapWidth, float mapHeight){
@@ -58,11 +62,27 @@ public class Miner extends MoveableEntity {
 		
 		checkPosition(mapWidth, mapHeight);
 		
+		if(HEALTH <= 0){
+			isDead = true;
+		}
+		
 		// Reset the bounds
 		bounds.x = position.x;
 		bounds.y = position.y; 
 		
 		origin = new Vector2(position.x - (width / 2), position.y - (width / 2));
+	}
+	
+	public Team getTeam(){
+		return team;
+	}
+	
+	public boolean getStatus(){
+		return isDead;
+	}
+	
+	public void Damage(float damage){
+		this.HEALTH -= damage;
 	}
 
 	private void rotate() {
@@ -149,7 +169,7 @@ public class Miner extends MoveableEntity {
 	
 	public Laser Shoot(Asteroid a){
 		return new Laser(Laser.SPEED, 0f, new Vector2(bounds.x + width / 2, 
-				bounds.y + height / 2), .1f, 8/20f, new Vector2(asteroidPosition.sub(origin)), 5f, true);
+				bounds.y + height / 2), .1f, 8/20f, new Vector2(asteroidPosition.sub(origin)), 5f, team);
 	}
 	
 	// Draw lasers

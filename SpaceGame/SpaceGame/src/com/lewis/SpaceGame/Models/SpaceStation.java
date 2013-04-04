@@ -9,11 +9,15 @@ public class SpaceStation extends Entity {
 	int LEVEL = 1;
 	float RESOURCES = 0;
 	boolean isDead = false;
+	Vector2 origin;
+	Team team;
 	
-	public SpaceStation(Vector2 position, float width, float height, boolean isRed) {
+	public SpaceStation(Vector2 position, float width, float height, Team team) {
 		super(position, width, height);
 		
-		this.isRed = isRed;
+		this.team = team;
+		
+		origin = new Vector2(position.x - (width / 2), position.y - (height / 2));
 	}
 	
 	public void update(){
@@ -25,6 +29,10 @@ public class SpaceStation extends Entity {
 		bounds.y = position.y;
 		bounds.width = width;
 		bounds.height = height;
+	}
+	
+	public Vector2 getOrigin(){
+		return origin;
 	}
 	
 	public boolean getTeam(){

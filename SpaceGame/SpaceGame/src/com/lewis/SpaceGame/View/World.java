@@ -11,6 +11,7 @@ import com.lewis.SpaceGame.Models.Laser;
 import com.lewis.SpaceGame.Models.Miner;
 import com.lewis.SpaceGame.Models.Ship;
 import com.lewis.SpaceGame.Models.SpaceStation;
+import com.lewis.SpaceGame.Models.Team;
 import com.lewis.SpaceGame.Models.Asteroid.Asteroid;
 import com.lewis.SpaceGame.Models.Asteroid.AsteroidSpawn;
 
@@ -19,6 +20,8 @@ public class World {
 	SpaceGame game;
 	WorldRenderer wr;
 	Ship ship;
+	Team red;
+	Team blue;
 	float width, height;
 	
 	Array<Laser> lasers = new Array<Laser>();
@@ -44,8 +47,11 @@ public class World {
 	
 	public World(SpaceGame game){
 		this.game = game;
-		ship = new Ship(15f, 0, new Vector2(10, 10), 1, 1);
+		ship = new Ship(15f, 0, new Vector2(10, 20), 1, 1);
 		Gdx.input.setInputProcessor(new InputHandler(this));
+		
+		red = new Team();
+		blue = new Team();
 		
 		random = new Random();
 		
@@ -56,8 +62,8 @@ public class World {
 		
 		
 		// SpaceStations
-		redTeamStation = new SpaceStation(new Vector2(3, 3), 6, 6, true);
-		blueTeamStation = new SpaceStation(new Vector2(10, 10), 6, 6, false);
+		redTeamStation = new SpaceStation(new Vector2(3, 3), 6, 6, red);
+		blueTeamStation = new SpaceStation(new Vector2(10, 10), 6, 6, blue);
 		
 		sIter = spawners.iterator();
 		while(sIter.hasNext()){
@@ -65,10 +71,10 @@ public class World {
 			asteroids.addAll(spawner.getAsteroids());	// Add all the asteroids spawned to the asteroids list
 		}	
 		
-		miners.add(new Miner(6f, 9, new Vector2(10, 10), 1, 1, this, asteroids.random()));
-		miners.add(new Miner(6f, 9, new Vector2(15, 10), 1, 1, this, asteroids.random()));
-		miners.add(new Miner(6f, 9, new Vector2(20, 10), 1, 1, this, asteroids.random()));
-		miners.add(new Miner(6f, 9, new Vector2(25, 10), 1, 1, this, asteroids.random()));
+		miners.add(new Miner(6f, 9, new Vector2(redTeamStation.getPosition().x + 2, redTeamStation.getPosition().y + 2), 1, 1, this, asteroids.random(), red));
+		miners.add(new Miner(6f, 9, new Vector2(redTeamStation.getPosition().x + 2, redTeamStation.getPosition().y + 2), 1, 1, this, asteroids.random(), red));
+		miners.add(new Miner(6f, 9, new Vector2(165, 218), 1, 1, this, asteroids.random(), blue));
+		miners.add(new Miner(6f, 9, new Vector2(165, 218), 1, 1, this, asteroids.random(), blue));
 	}
 	
 	public Ship getShip(){
@@ -95,6 +101,11 @@ public class World {
 		while(mIter.hasNext()){
 			m = mIter.next();
 			m.update(wr.backgroundTexture.getWidth(), wr.backgroundTexture.getHeight());
+			
+			// Remove deads
+			if(m.getStatus()){
+				mIter.remove();
+			}
 		}
 	}
 
@@ -148,16 +159,28 @@ public class World {
 		}
 		
 		if(l.getBounds().overlaps(blueTeamStation.getBounds())){
-			if(l.getIsRed()){
+			if(l.getTeam() == red){
 				blueTeamStation.damage(l.getDamage());
 				l.setVisible(false);
 			}
 		}
 		
 		if(l.getBounds().overlaps(redTeamStation.getBounds())){
-			if(!l.getIsRed()){
+			if(l.getTeam() == blue){
 				redTeamStation.damage(l.getDamage());
 				l.setVisible(false);
+			}
+		}
+		
+		mIter = miners.iterator();
+		while(mIter.hasNext()){
+			m = mIter.next();
+			
+			if(l.getBounds().overlaps(m.getBounds())){
+				if(m.getTeam() != l.getTeam()){
+					m.Damage(l.DAMAGE);
+					l.setVisible(false);
+				}
 			}
 		}
 	}
@@ -172,6 +195,10 @@ public class World {
 	
 	public Array<Miner> getMiners(){
 		return miners;
+	}
+	
+	public World getWorld(){
+		return this;
 	}
 	
 	public Array<Laser> getLasers(){

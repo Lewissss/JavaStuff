@@ -55,7 +55,8 @@ public class WorldRenderer {
 	Texture backgroundTexture;
 	Texture laserTexture;
 	Texture asteroidTexture;
-	Texture minerTexture;
+	Texture minerBlueTexture;
+	Texture minerRedTexture;
 	Texture blueTeamStation;
 	Texture redTeamStation;
 	
@@ -64,8 +65,8 @@ public class WorldRenderer {
 		
 		world.setRenderer(this);
 		
-		width = Gdx.graphics.getWidth() / 40;
-		height = Gdx.graphics.getHeight() / 40;
+		width = Gdx.graphics.getWidth() / 30;
+		height = Gdx.graphics.getHeight() / 30;
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, width, height);
@@ -85,8 +86,11 @@ public class WorldRenderer {
 		
 		laserTexture = new Texture("data/laser.png");
 		
-		minerTexture = new Texture("data/miner.png");
-		minerTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		minerBlueTexture = new Texture("data/minerblue.png");
+		minerBlueTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		
+		minerRedTexture = new Texture("data/minerred.png");
+		minerRedTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		
 		blueTeamStation = new Texture("data/blueteam.png");
 		redTeamStation = new Texture("data/redteam.png");
@@ -156,8 +160,14 @@ public class WorldRenderer {
 		while(mIter.hasNext()){
 			miner = mIter.next();
 			
-			spriteBatch.draw(minerTexture, miner.getPosition().x, miner.getPosition().y, miner.getWidth() / 2, miner.getHeight() / 2, miner.getWidth(), miner.getHeight(), 1, 1, miner.getRotation(),
-				0, 0, minerTexture.getWidth(), minerTexture.getHeight(), false, false);
+			if(miner.getTeam() == world.blue)
+			spriteBatch.draw(minerBlueTexture, miner.getPosition().x, miner.getPosition().y, miner.getWidth() / 2, miner.getHeight() / 2, miner.getWidth(), miner.getHeight(), 1, 1, miner.getRotation(),
+				0, 0, minerBlueTexture.getWidth(), minerBlueTexture.getHeight(), false, false);
+			
+			if(miner.getTeam() == world.red){
+				spriteBatch.draw(minerRedTexture, miner.getPosition().x, miner.getPosition().y, miner.getWidth() / 2, miner.getHeight() / 2, miner.getWidth(), miner.getHeight(), 1, 1, miner.getRotation(),
+						0, 0, minerRedTexture.getWidth(), minerRedTexture.getHeight(), false, false);
+			}
 			
 			// Draw miner lasers
 			miner.draw(spriteBatch, laserTexture);
@@ -180,7 +190,7 @@ public class WorldRenderer {
 		shipTexture.dispose();
 		backgroundTexture.dispose();
 		laserTexture.dispose();
-		minerTexture.dispose();
+		minerBlueTexture.dispose();
 		sr.dispose();
 	}
 	
@@ -247,6 +257,10 @@ public class WorldRenderer {
 		sr.rect(redTeamS.getPosition().x, redTeamS.getPosition().y, redTeamS.getWidth(), redTeamS.getHeight());
 		
 		sr.end();
+	}
+	
+	public WorldRenderer getRenderer(){
+		return this;
 	}
 
 }
