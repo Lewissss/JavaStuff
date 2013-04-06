@@ -2,6 +2,7 @@ package com.me.RBlock;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.FPSLogger;
+import com.me.RBlock.Screen.GameScreen;
 
 public class RBlock extends Game {
 	
@@ -13,6 +14,7 @@ public class RBlock extends Game {
 	@Override
 	public void create() {	
 		log = new FPSLogger();
+		setScreen(new GameScreen());
 	}
 
 	@Override
