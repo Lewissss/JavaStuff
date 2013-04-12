@@ -11,8 +11,8 @@ public class World {
 	Array<Block> blocks;
 	TileSet tiles;
 	Random random;
-	int MAXX = 30;
-	int MAXY = 18;
+	int MAXX = 15;
+	int MAXY = 15;
 
 	public World(){
 		blocks = new Array<Block>();
