@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="40" height="22" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Tile1" tilewidth="32" tileheight="32" spacing="2">
+  <image source="TexturePacker/outputdirectory/inputdirectory1.png" width="32" height="128"/>
+  <tile id="0">
+   <properties>
+    <property name="Collide" value="False"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="Collide" value="True"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Collision" width="40" height="22">
+  <data encoding="base64" compression="zlib">
+   eJztl8EKACAIQ8X+/5+7hpjVdsjDBkJo2UM9lJuZN7euEh8n8XESHyfxcRIfJ/FxEh+nG76f77DTvWscYfTNGs0R/TH2whj3oj3IzlS50JlA5wSp0S1/1t9Xxuw/MsBzVc0qf2UT+7YBHA==
+  </data>
+ </layer>
+ <layer name="Background" width="40" height="22">
+  <data encoding="base64" compression="zlib">
+   eJztw0ENAAAMA6Grf9OzsQckrJqqqqrvH7f5A3E=
+  </data>
+ </layer>
+ <layer name="MainLayer" width="40" height="22">
+  <data encoding="base64" compression="zlib">
+   eJztl0sKACAIBUXvf+dWQUT/CWrxBoQEowE3Lzcz/7x+RX4M+THkx5AfQ34M+THkx1jxe5nDZu/SrOid8yoxuEfzbD2b+7jgRzN3a+5kB6VfFD35F/RmTnaw6/OiEl2lAWw=
+  </data>
+ </layer>
+</map>
