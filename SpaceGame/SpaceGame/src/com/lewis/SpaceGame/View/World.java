@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.lewis.SpaceGame.SpaceGame;
 import com.lewis.SpaceGame.Models.Laser;
 import com.lewis.SpaceGame.Models.Miner;
+import com.lewis.SpaceGame.Models.Resource;
 import com.lewis.SpaceGame.Models.Ship;
 import com.lewis.SpaceGame.Models.SpaceStation;
 import com.lewis.SpaceGame.Models.Team;
@@ -39,6 +40,10 @@ public class World {
 	Array<Miner> miners = new Array<Miner>();
 	Iterator<Miner> mIter;
 	Miner m;
+	
+	Array<Resource> resources = new Array<Resource>();
+	Iterator<Resource> rIter;
+	Resource r;
 	
 	SpaceStation redTeamStation;
 	SpaceStation blueTeamStation;
@@ -85,6 +90,7 @@ public class World {
 		ship.update(wr.backgroundTexture.getWidth() / wr.width, wr.backgroundTexture.getHeight() / wr.height);
 		updateLasers();	
 		updateAsteroids();
+		updateResources();
 		
 		blueTeamStation.update();
 		redTeamStation.update();
@@ -118,7 +124,16 @@ public class World {
 			
 			if(a.getStatus()){
 				aIter.remove();
+				resources.add(new Resource(2, 0, new Vector2(a.getPosition().x, a.getPosition().y), 1, 1));
 			}
+		}
+	}
+	
+	private void updateResources(){
+		rIter = resources.iterator();
+		while(rIter.hasNext()){
+			r = rIter.next();
+			r.update();
 		}
 	}
 
@@ -194,6 +209,10 @@ public class World {
 	
 	public void addLaser(Laser l){
 		lasers.add(l);
+	}
+	
+	public Array<Resource> getResources(){
+		return resources;
 	}
 	
 	public Array<Miner> getMiners(){

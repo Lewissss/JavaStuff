@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Array;
 import com.lewis.SpaceGame.SpaceGame;
 import com.lewis.SpaceGame.Models.Laser;
 import com.lewis.SpaceGame.Models.Miner;
+import com.lewis.SpaceGame.Models.Resource;
 import com.lewis.SpaceGame.Models.Ship;
 import com.lewis.SpaceGame.Models.SpaceStation;
 import com.lewis.SpaceGame.Models.Asteroid.Asteroid;
@@ -47,6 +48,10 @@ public class WorldRenderer {
 	Miner miner;
 	Iterator<Miner> mIter;
 	
+	Array<Resource> resources = new Array<Resource>();
+	Resource resource;
+	Iterator<Resource> rIter;
+	
 	SpaceStation redTeamS;
 	SpaceStation blueTeamS;
 	
@@ -59,6 +64,7 @@ public class WorldRenderer {
 	Texture minerRedTexture;
 	Texture blueTeamStation;
 	Texture redTeamStation;
+	Texture resourceTexture;
 	
 	public WorldRenderer(World world){
 		this.world = world;
@@ -97,6 +103,9 @@ public class WorldRenderer {
 		
 		blueTeamStation.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		
+		resourceTexture = new Texture("data/resource.png");
+		resourceTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		
 		sr = new ShapeRenderer();
 		cr = new ShapeRenderer();
 		
@@ -113,6 +122,7 @@ public class WorldRenderer {
 		miners = world.getMiners();
 		blueTeamS = world.getBlueTeam();
 		redTeamS = world.getRedTeam();
+		resources = world.getResources();
 		
 		camera.position.set(ship.getPosition().x, ship.getPosition().y, 0);
 		camera.update();
@@ -122,6 +132,16 @@ public class WorldRenderer {
 		spriteBatch.begin();
 	
 		spriteBatch.draw(backgroundTexture, 0,  0,  backgroundTexture.getWidth() / width, backgroundTexture.getHeight() / height, 1, 1, backgroundTexture.getWidth(), backgroundTexture.getHeight(), false, false);
+		
+		//Draw resources
+		
+		rIter = resources.iterator();
+		while(rIter.hasNext()){
+			resource = rIter.next();
+			
+			spriteBatch.draw(resourceTexture, resource.getPosition().x, resource.getPosition().y, resource.getWidth() / 4, resource.getHeight() / 4, resource.getWidth() / 2, resource.getHeight() / 2, 1, 1, resource.getRotation(),
+					0, 0, resourceTexture.getWidth(), resourceTexture.getHeight(), false, false);
+		}
 		
 		//Draw spacestations
 		//Blue station
@@ -151,7 +171,7 @@ public class WorldRenderer {
 		aIter = asteroids.iterator();
 		while(aIter.hasNext()){
 			asteroid = aIter.next();
-			spriteBatch.draw(asteroidTexture, asteroid.getPosition().x, asteroid.getPosition().y, asteroid.getWidth() / 2, asteroid.getHeight() / 2, asteroid.getWidth(), asteroid.getHeight(), 1, 1, asteroid.getRotation(),
+			spriteBatch.draw(asteroidTexture, asteroid.getPosition().x, asteroid.getPosition().y, asteroid.getWidth() / 2, asteroid.getHeight() / 2, asteroid.getWidth() * 1.5f, asteroid.getHeight() * 1.5f, 1, 1, asteroid.getRotation(),
 					0, 0, asteroidTexture.getWidth(), asteroidTexture.getHeight(), false, false);
 		}
 		
