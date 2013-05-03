@@ -6,7 +6,7 @@ import com.lewis.boxgame.Screens.GameScreen;
 
 public class BoxGame extends Game{
 
-	public static final String VERSION = ("0.0.0.02 - [PREALPHA]");
+	public static final String VERSION = ("0.0.0.03 - [Pre-Release]");
 
 	FPSLogger log;
 
