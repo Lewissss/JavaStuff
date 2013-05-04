@@ -16,6 +16,9 @@ public class Recharger {
 	World world;
 	Player player;
 	PointLight light;
+	
+	boolean activated = false;
+	boolean initialCharge = true;
 
 	Body circleBody;
 	BodyDef circleDef;
@@ -26,10 +29,12 @@ public class Recharger {
 	float RECHARGE_RATE = 0.3f;
 	float timer = 0;
 	float INTERVAL = 40f;
+	
+	float distance;
 
 	Rectangle rectangle;
 
-	float power = 200;
+	float power = 0;
 
 	CircleShape circleShape = new CircleShape();
 
@@ -73,7 +78,22 @@ public class Recharger {
 		}
 		if(power > MAX_POWER){
 			power = MAX_POWER;
+			initialCharge = false;
 		}
+		
+		// Get distance from player
+		distance = position.dst(player.getPosition());
+		
+		// If the player is close, activate (Permanent)
+		if(distance < 50){
+			activated = true;
+		}
+		
+		if(initialCharge && activated){
+			power += 1;
+		}
+		
+		System.out.println(activated);
 	}
 
 	private void rechargePad() {

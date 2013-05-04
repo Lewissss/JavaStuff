@@ -79,7 +79,6 @@ public class LightRenderer {
 			rechargerLights.get(i).setDistance(powerPercent);
 			rechargerLights.get(i).setColor(Color.YELLOW);
 			
-			System.out.println(powerPercent);
 		}
 
 		handler.updateAndRender();
