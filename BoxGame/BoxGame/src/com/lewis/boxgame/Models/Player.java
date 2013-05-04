@@ -29,10 +29,10 @@ public class Player {
 	Rectangle rectangle;
 
 	float MAX_DISTANCE = 100f;
-	float distance = 100f;
+	float battery = 100f;
 	float timer = 0;
 	float INTERVAL = 10f;
-	float REDUCE_SPEED = 0.25f;
+	float REDUCE_SPEED = 0.75f;
 
 	Vector2 mouse;
 
@@ -53,8 +53,8 @@ public class Player {
 
 		FixtureDef circleFixture = new FixtureDef();
 		circleFixture.shape = circleShape;
-		circleFixture.density = 0.4f;
-		circleFixture.friction = 0.2f;
+		circleFixture.density = 0.2f;
+		circleFixture.friction = 1f;
 		circleFixture.restitution = 0.0f;	// Bouncyness  (Higher the number the more perfect the bounce)
 
 		circleBody.createFixture(circleFixture);
@@ -79,14 +79,14 @@ public class Player {
 			SPEED--;
 		}
 
-		circleBody.setAngularDamping(1f);
+		circleBody.setLinearDamping(7f);
 
-		if(distance > MAX_DISTANCE){
-			distance = MAX_DISTANCE;
+		if(battery > MAX_DISTANCE){
+			battery = MAX_DISTANCE;
 			isFull = true;
 		}
 		
-		if(distance != MAX_DISTANCE){
+		if(battery != MAX_DISTANCE){
 			isFull = false;
 		}
 
@@ -129,7 +129,7 @@ public class Player {
 			timer ++;
 
 			if(timer > INTERVAL){
-				distance -= REDUCE_SPEED;
+				battery -= REDUCE_SPEED;
 				timer = 0;
 			}
 		}
@@ -157,12 +157,12 @@ public class Player {
 		return rectangle;
 	}
 
-	public float getDistance(){
-		return distance;
+	public float getBattery(){
+		return battery;
 	}
 
-	public void addDistance(float d){
-		distance += d;
+	public void addBattery(float d){
+		battery += d;
 	}
 
 	public boolean getIsFull(){

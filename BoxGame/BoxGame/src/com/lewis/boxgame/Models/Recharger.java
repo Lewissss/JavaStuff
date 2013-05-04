@@ -22,10 +22,10 @@ public class Recharger {
 	Sprite playerSprite;
 	float radius = 10f;
 	Vector2 position;
-	float MAX_POWER = 100f;
-	float RECHARGE_RATE = 0.2f;
+	float MAX_POWER = 150f;
+	float RECHARGE_RATE = 0.3f;
 	float timer = 0;
-	float INTERVAL = 30f;
+	float INTERVAL = 40f;
 
 	Rectangle rectangle;
 
@@ -56,7 +56,7 @@ public class Recharger {
 
 		circleBody.createFixture(circleFixture);
 
-		rectangle = new Rectangle(position.x, position.y, radius * 2, radius * 2);
+		rectangle = new Rectangle(position.x, position.y, radius, radius);
 	}
 
 	public void update(){
@@ -74,8 +74,6 @@ public class Recharger {
 		if(power > MAX_POWER){
 			power = MAX_POWER;
 		}
-
-		System.out.println("Recharge power: " + power);
 	}
 
 	private void rechargePad() {
@@ -100,7 +98,7 @@ public class Recharger {
 			player.setIsCharging(true);
 
 			if(power > 0 && !player.getIsFull()){
-				player.addDistance(RECHARGE_RATE);
+				player.addBattery(RECHARGE_RATE);
 				power -= RECHARGE_RATE;
 			}
 		}
@@ -115,6 +113,10 @@ public class Recharger {
 
 	public float getPower(){
 		return power;
+	}
+	
+	public float getMaxPower(){
+		return MAX_POWER;
 	}
 
 	public float getWidth(){

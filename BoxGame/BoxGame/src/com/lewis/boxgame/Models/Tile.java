@@ -12,8 +12,8 @@ public class Tile {
 	World world;
 	Body squareBody;
 	BodyDef squareDef;
-	float width = 4f;
-	float height = 4f;
+	float width = 8f;
+	float height = 8f;
 	Vector2 position;
 	
 	public Tile(World world, Vector2 position){

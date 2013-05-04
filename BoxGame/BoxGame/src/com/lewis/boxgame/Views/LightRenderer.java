@@ -43,7 +43,7 @@ public class LightRenderer {
 		light = new PointLight(handler, 750, Color.GREEN, 100, 0, 0);
 
 		for(Recharger r : rechargers){
-			rechargerLights.add(new PointLight(handler, 500, Color.YELLOW, r.getPower(), r.getPosition().x, r.getPosition().y));
+			rechargerLights.add(new PointLight(handler, 500, Color.BLUE, r.getPower(), r.getPosition().x, r.getPosition().y));
 		}
 	}
 
@@ -54,7 +54,7 @@ public class LightRenderer {
 		light.attachToBody(player.getBody(), 0, 0);
 		light.setXray(false);
 		light.setSoft(true);
-		light.setColor(Color.GREEN);
+		light.setColor(Color.RED);
 
 		if(Gdx.input.isKeyPressed(Keys.Q)){
 
@@ -69,9 +69,17 @@ public class LightRenderer {
 
 		//Set recharge light power
 		for(int i = 0; i < rechargers.size; i++){
+			
+			//Get power out of 100%
+			float power = rechargers.get(i).getPower();
+			float powerPercent = (power / rechargers.get(i).getMaxPower()) * 100;
+			
 
 			//Set the power of the light
-			rechargerLights.get(i).setDistance(rechargers.get(i).getPower());
+			rechargerLights.get(i).setDistance(powerPercent);
+			rechargerLights.get(i).setColor(Color.YELLOW);
+			
+			System.out.println(powerPercent);
 		}
 
 		handler.updateAndRender();

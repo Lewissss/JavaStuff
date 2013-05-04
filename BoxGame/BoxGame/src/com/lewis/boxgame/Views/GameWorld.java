@@ -7,9 +7,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.lewis.boxgame.BoxGame;
-import com.lewis.boxgame.Models.Level;
 import com.lewis.boxgame.Models.Player;
 import com.lewis.boxgame.Models.Recharger;
+import com.lewis.boxgame.Screens.GameScreen;
 
 public class GameWorld {
 	
@@ -50,11 +50,15 @@ public class GameWorld {
 			charger.update();
 		}
 		
+		if(player.getBattery() < 0){
+			game.setScreen(new GameScreen(game));
+		}
+		
 		world.step(1/60f, 6, 2);
 	}
 	
 	public float getDistance(){
-		return player.getDistance();
+		return player.getBattery();
 	}
 	
 	public void dispose(){

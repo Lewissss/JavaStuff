@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.lewis.boxgame.Models.Level;
 import com.lewis.boxgame.Models.Player;
 import com.lewis.boxgame.Models.Recharger;
 
@@ -78,7 +77,8 @@ public class WorldRenderer {
 		camera.update();
 
 		spriteBatch.begin();
-
+		
+		font.draw(spriteBatch, "Remaining battery: " + player.getBattery(), player.getPosition().x - (width / 2) + 3, player.getPosition().y + (height / 2) - 2);
 
 		spriteBatch.end();	
 	}
