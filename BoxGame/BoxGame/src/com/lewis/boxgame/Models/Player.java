@@ -36,7 +36,7 @@ public class Player {
 
 	Vector2 mouse;
 
-	float SPEED = 35f;
+	float SPEED = 39f;
 	Vector2 position;
 
 	public Player(World world){

@@ -90,15 +90,13 @@ public class Recharger {
 		}
 		
 		if(initialCharge && activated){
-			power += 1;
+			power += 0.75;
 		}
-		
-		System.out.println(activated);
 	}
 
 	private void rechargePad() {
 
-		if(!player.getIsCharging())
+		if(!player.getIsCharging() && activated)
 		{
 			timer++;
 
