@@ -10,6 +10,8 @@ public class Main {
 		cfg.useGL20 = true;
 		cfg.width = 1080;
 		cfg.height = 720;
+		cfg.resizable = false;
+		cfg.samples = 32;
 		
 		new LwjglApplication(new BoxGame(), cfg);
 	}

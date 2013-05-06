@@ -81,7 +81,7 @@ public class LightRenderer {
 			
 		}
 
-		handler.updateAndRender();
+		//handler.updateAndRender();
 	}
 
 	public void dispose(){

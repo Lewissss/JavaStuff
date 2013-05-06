@@ -25,7 +25,7 @@ public class Recharger {
 	Sprite playerSprite;
 	float radius = 10f;
 	Vector2 position;
-	float MAX_POWER = 150f;
+	float MAX_POWER = 100f;
 	float RECHARGE_RATE = 0.3f;
 	float timer = 0;
 	float INTERVAL = 40f;
@@ -90,7 +90,7 @@ public class Recharger {
 		}
 		
 		if(initialCharge && activated){
-			power += 0.75;
+			power += 0.88;
 		}
 	}
 
