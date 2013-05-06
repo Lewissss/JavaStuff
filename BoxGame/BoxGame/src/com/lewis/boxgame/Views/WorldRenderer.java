@@ -78,7 +78,7 @@ public class WorldRenderer {
 
 		spriteBatch.begin();
 		
-		font.draw(spriteBatch, "Remaining battery: " + player.getBattery(), player.getPosition().x - (width / 2) + 3, player.getPosition().y + (height / 2) - 2);
+		font.draw(spriteBatch, "Remaining battery: " + (int)player.getBattery() + "%", player.getPosition().x - (width / 2) + 3, player.getPosition().y + (height / 2) - 2);
 
 		spriteBatch.end();	
 	}

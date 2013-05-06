@@ -54,7 +54,7 @@ public class LightRenderer {
 		light.attachToBody(player.getBody(), 0, 0);
 		light.setXray(false);
 		light.setSoft(true);
-		light.setColor(Color.RED);
+		light.setColor(Color.BLUE);
 
 		if(Gdx.input.isKeyPressed(Keys.Q)){
 
@@ -77,7 +77,7 @@ public class LightRenderer {
 
 			//Set the power of the light
 			rechargerLights.get(i).setDistance(powerPercent);
-			rechargerLights.get(i).setColor(Color.YELLOW);
+			rechargerLights.get(i).setColor(Color.RED);
 			
 		}
 
