@@ -34,7 +34,13 @@ public class LightRenderer {
 		this.world = gWorld.getWorld();
 		this.wr = wr;
 		this.camera = wr.getCamera();
+		
+		RayHandler.setGammaCorrection(true);
 		handler = new RayHandler(world);
+		
+		handler.setAmbientLight(0.03f);
+		handler.setBlur(true);
+		handler.setShadows(true); 
 
 		player = gWorld.getPlayer();
 		rechargers = gWorld.getLevel().getRechargers();
@@ -80,8 +86,8 @@ public class LightRenderer {
 			rechargerLights.get(i).setColor(Color.RED);
 			
 		}
-
-		//handler.updateAndRender();
+		
+		handler.updateAndRender();
 	}
 
 	public void dispose(){
