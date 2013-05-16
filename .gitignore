@@ -383,6 +383,7 @@ version.ini
 /RBlock/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes/2895548932.index
 /RBlock/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes/550678573.index
 /RBlock/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes/577490752.index
+<<<<<<< HEAD
 /RBlock/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.wst.sse.ui.prefs
 /RBlock/.metadata/.plugins/org.eclipse.debug.core/.launches/Main (6).launch
 /RBlock/.metadata/.plugins/org.eclipse.debug.core/.launches/Main (7).launch
@@ -398,3 +399,5 @@ version.ini
 /RBlock/.metadata/.plugins/org.eclipse.jdt.core/731413828.index
 /RBlock/.metadata/.plugins/org.eclipse.jdt.core/839989719.index
 /RBlock/.metadata/.plugins/org.eclipse.wst.sse.ui/dialog_settings.xml
+=======
+>>>>>>> 14b115331a6e9267c2575148658708593bbd1c44
