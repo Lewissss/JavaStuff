@@ -7,19 +7,16 @@ import com.lewis.boxgame.Views.WorldRenderer;
 
 public class GameScreen implements Screen  {
 
-	BoxGame game;
-	GameWorld gWorld;
-	WorldRenderer render;
+	private GameWorld gWorld;
+	private WorldRenderer render;
 	
 	public GameScreen(BoxGame game){
-		this.game = game;
 		gWorld = new GameWorld(game);
 		render = new WorldRenderer(gWorld);
 	}
 	
 	@Override
 	public void render(float delta) {
-		
 		gWorld.update();
 		render.render();
 	}

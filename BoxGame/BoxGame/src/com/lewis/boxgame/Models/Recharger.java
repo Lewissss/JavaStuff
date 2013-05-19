@@ -1,67 +1,73 @@
 package com.lewis.boxgame.Models;
 
-import box2dLight.PointLight;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class Recharger {
 
-	World world;
-	Player player;
-	PointLight light;
+	private Player player;
 	
-	boolean activated = false;
-	boolean initialCharge = true;
-
-	Body circleBody;
-	BodyDef circleDef;
-	Sprite playerSprite;
-	float radius = 10f;
-	Vector2 position;
-	float MAX_POWER = 100f;
-	float RECHARGE_RATE = 0.3f;
-	float timer = 0;
-	float INTERVAL = 40f;
+	private boolean activated = false;
+	private boolean initialCharge = true;
 	
-	float distance;
-
-	Rectangle rectangle;
-
-	float power = 0;
-
-	CircleShape circleShape = new CircleShape();
+	private Texture rechargerTexture;
+	private Body circleBody;
+	private BodyDef circleDef;
+	private PolygonShape chargerShape = new PolygonShape();
+	
+	private float width = 8;
+	private float height = 8;
+	private float MAX_POWER = 100f;
+	private float RECHARGE_RATE = 0.3f;
+	private float timer = 0;
+	private float INTERVAL = 40f;
+	private float distance;
+	private float power = 0;
+	
+	private Vector2 position;
+	private Rectangle rectangle;
 
 	public Recharger(World world, Vector2 position, Player player){
 
-		this.world = world;
 		this.position = position;
 		this.player = player;
 
+		FixtureDef circleFixture = setCircleShape(world, position);
+
+		circleBody.createFixture(circleFixture);
+
+		rectangle = new Rectangle(position.x, position.y, width + 1, height + 1);
+		
+		rechargerTexture = new Texture(Gdx.files.internal("data/Textures/recharger.png"));
+		rechargerTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+	}
+
+	private FixtureDef setCircleShape(World world, Vector2 position) {
 		circleDef = new BodyDef();
 		circleDef.type = BodyType.StaticBody;
 		circleDef.position.set(position);
 
 		circleBody = world.createBody(circleDef);
 
-		circleShape.setRadius(radius);
+		chargerShape.setAsBox(width, height);
 
 		FixtureDef circleFixture = new FixtureDef();
-		circleFixture.shape = circleShape;
+		circleFixture.shape = chargerShape;
 		circleFixture.density = 0.4f;
 		circleFixture.friction = 0.2f;
 		circleFixture.restitution = 0.0f;	// Bouncyness  (Higher the number the more perfect the bounce)
 		circleFixture.isSensor = true;
-
-		circleBody.createFixture(circleFixture);
-
-		rectangle = new Rectangle(position.x, position.y, radius, radius);
+		return circleFixture;
 	}
 
 	public void update(){
@@ -72,6 +78,26 @@ public class Recharger {
 		// Slowly recharge the pad
 		rechargePad();
 
+		lockPower();
+		
+		// Get distance from player
+		distance = position.dst(player.getPosition());
+		
+		// If the player is close, activate (Permanent)
+		activateCharger();
+	}
+
+	private void activateCharger() {
+		if(distance < 70){
+			activated = true;
+		}
+		
+		if(initialCharge && activated){
+			power += 0.88;
+		}
+	}
+
+	private void lockPower() {
 		if(power < 0)
 		{
 			power = 0;
@@ -79,18 +105,6 @@ public class Recharger {
 		if(power > MAX_POWER){
 			power = MAX_POWER;
 			initialCharge = false;
-		}
-		
-		// Get distance from player
-		distance = position.dst(player.getPosition());
-		
-		// If the player is close, activate (Permanent)
-		if(distance < 50){
-			activated = true;
-		}
-		
-		if(initialCharge && activated){
-			power += 0.88;
 		}
 	}
 
@@ -123,6 +137,10 @@ public class Recharger {
 		else{
 			player.setIsCharging(false);
 		}
+	}
+	
+	public void draw(SpriteBatch spriteBatch){
+		spriteBatch.draw(rechargerTexture, position.x - width, position.y - height);
 	}
 
 	public Vector2 getPosition(){

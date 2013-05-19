@@ -2,7 +2,6 @@ package com.lewis.boxgame.Views;
 
 import java.util.Iterator;
 
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -13,19 +12,13 @@ import com.lewis.boxgame.Screens.GameScreen;
 
 public class GameWorld {
 	
-	BoxGame game;
-	WorldRenderer wr;
-	World world;
-	
-	Level level;
-	
-	Player player;
-	
-	Array<Recharger> rechargers = new Array<Recharger>();
-	Recharger charger;
-	Iterator<Recharger> rIter;
-	
-	ShapeRenderer sr = new ShapeRenderer();
+	private BoxGame game;
+	private World world;
+	private Level level;
+	private Player player;
+	private Array<Recharger> rechargers = new Array<Recharger>();
+	private Recharger charger;
+	private Iterator<Recharger> rIter;
 		
 	public GameWorld(BoxGame game){
 		
@@ -43,18 +36,26 @@ public class GameWorld {
 		
 		player.update();
 		
+		updateRechargers();
+		
+		endGame();
+		
+		world.step(1/60f, 6, 2);
+	}
+
+	private void endGame() {
+		if(player.getBattery() < 0){
+			game.setScreen(new GameScreen(game));
+		}
+	}
+
+	private void updateRechargers() {
 		rIter = rechargers.iterator();
 		while(rIter.hasNext()){
 			charger = rIter.next();
 			
 			charger.update();
 		}
-		
-		if(player.getBattery() < 0){
-			game.setScreen(new GameScreen(game));
-		}
-		
-		world.step(1/60f, 6, 2);
 	}
 	
 	public float getDistance(){
@@ -66,7 +67,6 @@ public class GameWorld {
 	}
 	
 	public World getWorld(){
-		
 		return world;
 	}
 	

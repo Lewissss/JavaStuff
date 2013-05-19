@@ -1,5 +1,6 @@
 package com.lewis.boxgame.Views;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -9,11 +10,12 @@ import com.lewis.boxgame.Models.Tile;
 
 public class Level {
 
-	World world;
-	Player player;
+	private World world;
+	private Player player;
 
-	Array<Tile> tiles;
-	Array<Recharger> rechargers;
+	private Array<Tile> tiles;
+	private Array<Recharger> rechargers;
+	private Array<Rectangle> floorTiles;
 
 	public Level(World world, Player player){
 		this.world = world; 
@@ -21,6 +23,7 @@ public class Level {
 
 		tiles = new Array<Tile>();
 		rechargers = new Array<Recharger>();
+		floorTiles = new Array<Rectangle>();
 
 		readLevel();
 	}
@@ -32,20 +35,26 @@ public class Level {
 	public Array<Recharger> getRechargers(){
 		return rechargers;
 	}
+	
+	public Array<Rectangle> getFloorTiles(){
+		return floorTiles;
+	}
 
 	public void readLevel(){
 
+		System.out.println("Loading Map Array...");
+		
 		String[] map = new String[46];
 
 		map[0] =  "11111111111111111111111111111111111111111111111111111111111111100000000";
-		map[1] =  "10000000000000000000000000000000000000000000000000000000000000100000000";
-		map[2] =  "10000000000000000000000000000000000000000000000000000000000000100000000";
-		map[3] =  "10000000000000000000000000000000000000000000000000000000000000100000000";
-		map[4] =  "10000000000000000000000000000000000000000000000000000000000000100000000";
-		map[5] =  "11111111111111111111111111111000001111111111111111110000000000100000000";
-		map[6] =  "00000000000000000000000000001002001000000000000000010000000000100000000";
-		map[7] =  "00000000000000000000000000001000001000000000000000010000000000100000000";
-		map[8] =  "00000000000000000000000000001000001000000000000000010000000000100000000";
+		map[1] =  "13333333333333333333333333333333333333333333333333333333333333100000000";
+		map[2] =  "13333333333333333333333333333333333333333333333333333333333333100000000";
+		map[3] =  "13333333333333333333333333333333333333333333333333333333333333100000000";
+		map[4] =  "13333333333333333333333333333333333333333333333333333333333333100000000";
+		map[5] =  "11111111111111111111111111111333331111111111111111110000000000100000000";
+		map[6] =  "00000000000000000000000000001332331000000000000000010000000000100000000";
+		map[7] =  "00000000000000000000000000001333331000000000000000010000000000100000000";
+		map[8] =  "00000000000000000000000000001333331000000000000000010000000000100000000";
 		map[9] =  "000000000000000000000000000 1111111000000000000000010000000000111111111";
 		map[10] = "00001111111100000000000000000000000000000000000000010000000000100000001";
 		map[11] = "00001000000100000000000000000000000000000000000000010000000000000000001";
@@ -84,6 +93,8 @@ public class Level {
 		map[44] = "10000000010000000000000000000000000000000000000010000000100000010000010";
 		map[45] = "10000000010000000000000000000000000000000000000011111111100000011111110";
 
+		System.out.println("Map Loaded, reading in tiles...");
+		
 		int y = 1;
 
 		for(int i = 0; i < map.length; i++){
@@ -98,22 +109,25 @@ public class Level {
 					break;
 
 				case '1':
-					tiles.add(new Tile(world, new Vector2(x * 8,y * 8)));
+					tiles.add(new Tile(world, new Vector2(x * 16,y * 16)));
 					break;
 
 				case '2':
-					rechargers.add(new Recharger(world, new Vector2(x * 8,y * 8), player));
+					rechargers.add(new Recharger(world, new Vector2(x * 16,y * 16), player));
+					break;
+					
+				case '3':
+					floorTiles.add(new Rectangle(x * 16, y * 16, 16, 16));
 					break;
 
 				default:
 					break;
 				}
-
-				System.out.println(x);
-
 			}
 			y--;
 		}
+		
+		System.out.println("Map created!");
 	}
 
 }
