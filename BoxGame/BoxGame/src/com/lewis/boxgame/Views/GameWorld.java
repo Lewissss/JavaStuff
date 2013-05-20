@@ -64,6 +64,12 @@ public class GameWorld {
 	
 	public void dispose(){
 		world.dispose();
+		level.dispose();
+		player.dispose();
+		
+		for(Recharger charger: rechargers){
+			charger.dispose();
+		}
 	}
 	
 	public World getWorld(){

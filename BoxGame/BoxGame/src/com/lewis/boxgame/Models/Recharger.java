@@ -142,6 +142,10 @@ public class Recharger {
 	public void draw(SpriteBatch spriteBatch){
 		spriteBatch.draw(rechargerTexture, position.x - width, position.y - height);
 	}
+	
+	public void dispose(){
+		rechargerTexture.dispose();
+	}
 
 	public Vector2 getPosition(){
 		return position;

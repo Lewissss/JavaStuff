@@ -1,5 +1,9 @@
 package com.lewis.boxgame.Views;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -16,10 +20,17 @@ public class Level {
 	private Array<Tile> tiles;
 	private Array<Recharger> rechargers;
 	private Array<Rectangle> floorTiles;
+	
+	// Textures
+	Texture floorTexture;
 
 	public Level(World world, Player player){
 		this.world = world; 
 		this.player = player;
+		
+		// Load textures
+		floorTexture = new Texture(Gdx.files.internal("data/Textures/floor.png"));
+		floorTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
 		tiles = new Array<Tile>();
 		rechargers = new Array<Recharger>();
@@ -128,6 +139,38 @@ public class Level {
 		}
 		
 		System.out.println("Map created!");
+	}
+	
+	public void draw(SpriteBatch spriteBatch){
+		
+		//Draw background
+		//TODO: Add In background
+		
+		//Draw floor tiles
+		for(Rectangle floor : floorTiles){
+			spriteBatch.draw(floorTexture, floor.x - (floor.width / 2), floor.y - (floor.height / 2));
+		}
+		
+		//Draw colliable tiles
+		for(Tile tile : tiles){
+			tile.draw(spriteBatch);
+		}
+		
+		// Draw rechargers
+		for(Recharger chargers: rechargers){
+			chargers.draw(spriteBatch);
+		}
+		
+		// Draw the player
+		player.draw(spriteBatch);
+	}
+	
+	public void dispose(){
+		floorTexture.dispose();
+		
+		for(Tile tile : tiles){
+			tile.dipose();
+		}
 	}
 
 }

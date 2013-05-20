@@ -56,5 +56,9 @@ public class Tile {
 	public void draw(SpriteBatch batch){
 		batch.draw(tileTexture, position.x - width, position.y - height);
 	}
+	
+	public void dipose(){
+		tileTexture.dispose();
+	}
 
 }

@@ -146,6 +146,10 @@ public class Player {
 	public void draw(SpriteBatch spriteBatch){
 		spriteBatch.draw(playerTexture, position.x - (radius / 2) - 2.5f, position.y - (radius / 2) - 2.5f);
 	}
+	
+	public void dispose(){
+		playerTexture.dispose();
+	}
 
 	public void move(Vector2 v){
 		circleBody.setLinearVelocity(v);

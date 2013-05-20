@@ -4,17 +4,13 @@ import box2dLight.ConeLight;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.lewis.boxgame.Models.Player;
 import com.lewis.boxgame.Models.Recharger;
-import com.lewis.boxgame.Models.Tile;
 
 public class WorldRenderer {
 
@@ -30,9 +26,6 @@ public class WorldRenderer {
 	private Player player;
 	private Array<ConeLight> lights = new Array<ConeLight>();
 	private Array<Recharger> rechargers = new Array<Recharger>();
-	private Array<Tile> tiles = new Array<Tile>();
-	private Array<Rectangle> floorTiles = new Array<Rectangle>();
-	private Texture floorTexture;
 
 	public WorldRenderer(GameWorld gworld){
 
@@ -41,13 +34,8 @@ public class WorldRenderer {
 		level = gWorld.getLevel();
 
 		lRender = new LightRenderer(gWorld, world, this);
-		
-		floorTexture = new Texture(Gdx.files.internal("data/Textures/floor.png"));
-		floorTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
 		rechargers = level.getRechargers();
-		tiles = level.getTiles();
-		floorTiles = level.getFloorTiles();
 
 		font = new BitmapFont();
 		font.setScale(0.5f);
@@ -82,25 +70,16 @@ public class WorldRenderer {
 		camera.update();
 		
 		spriteBatch.begin();
-
-		for(Tile tile : tiles){
-			tile.draw(spriteBatch);
-		}
 		
-		for(Rectangle floor : floorTiles){
-			spriteBatch.draw(floorTexture, floor.x - (floor.width / 2), floor.y - (floor.height / 2));
-		}
-		
-		for(Recharger chargers: rechargers){
-			chargers.draw(spriteBatch);
-		}
-		
-		player.draw(spriteBatch);
+		// Draw the level
+		level.draw(spriteBatch);
 		
 		spriteBatch.end();	
 
 		// Render world (DEBUG)
 		//render.render(world, camera.combined);
+		
+		// Render the lights
 		lRender.render();
 		
 		//Draw the GUI after the Light has been updated to avoid it been affected by light
@@ -119,6 +98,7 @@ public class WorldRenderer {
 	public void dispose(){
 		world.dispose();
 		lRender.dispose();
+		font.dispose();
 	}
 
 	public OrthographicCamera getCamera(){
